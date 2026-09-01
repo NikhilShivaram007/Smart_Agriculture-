@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Login | Smart Agriculture</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="login-page">
+
+    <div class="login-container">
+
+        <!-- LEFT SIDE - AGRICULTURE -->
+        <div class="login-agriculture">
+
+            <div class="login-overlay">
+
+                <h1>🌾 SMART AGRICULTURE</h1>
+
+                <p class="login-subtitle">
+                    Management & Farmer Assistance System
+                </p>
+
+                <div class="login-farm-message">
+
+                    <h2>👨‍🌾 Welcome Back, Farmer!</h2>
+
+                    <p>
+                        Manage your farm smarter with technology.
+                    </p>
+
+                    <div class="login-farm-elements">
+
+                        <div>
+                            <span>👨‍🌾</span>
+                            <small>Farmer</small>
+                        </div>
+
+                        <div>
+                            <span>🐄</span>
+                            <small>Livestock</small>
+                        </div>
+
+                        <div>
+                            <span>🌾</span>
+                            <small>Farm Land</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE - LOGIN -->
+        <div class="login-form-section">
+
+            <div class="login-card">
+
+                <div class="login-header">
+
+                    <div class="login-icon">
+                        👨‍🌾
+                    </div>
+
+                    <h2>Farmer Login</h2>
+
+                    <p>
+                        Welcome back! Login to continue.
+                    </p>
+
+                </div>
+
+
+                <form method="POST" action="/login">
+
+                    <!-- EMAIL / USERNAME -->
+                    <div class="login-form-group">
+
+                        <label for="username">
+                            👤 Email / Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter email or username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="login-form-group">
+
+                        <label for="password">
+                            🔒 Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- REMEMBER ME -->
+                    <div class="remember-me">
+
+                        <label>
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+                    <button
+                        type="submit"
+                        class="login-button"
+                    >
+                        🌱 LOGIN
+                    </button>
+
+                </form>
+
+
+                <!-- REGISTER LINK -->
+                <div class="register-link">
+
+                    <p>
+                        New Farmer?
+                        <a href="/register">Register here</a>
+                    </p>
+
+                </div>
+
+
+                <div class="login-footer">
+                    🌱 Smart Farming • Better Future 🌱
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

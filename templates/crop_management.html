@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crop Management | Smart Farm</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f8f3;
+            color: #245c36;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            color: #176b35;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #718074;
+            font-size: 14px;
+        }
+
+        /* SUMMARY */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #dcebdd;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(30, 90, 45, 0.08);
+        }
+
+        .summary-card .icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .summary-card h3 {
+            color: #176b35;
+            font-size: 24px;
+        }
+
+        .summary-card p {
+            color: #718074;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* CROP TABLE */
+
+        .section-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 7px 20px rgba(30, 90, 45, 0.08);
+            border: 1px solid #dcebdd;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            color: #176b35;
+            font-size: 23px;
+        }
+
+        .section-title p {
+            color: #718074;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .crop-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .crop-table th {
+            background: #176b35;
+            color: white;
+            padding: 13px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .crop-table td {
+            padding: 14px;
+            border-bottom: 1px solid #edf3ee;
+            font-size: 13px;
+            color: #53665a;
+        }
+
+        .crop-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .crop-name {
+            font-weight: bold;
+            color: #245c36;
+        }
+
+        .healthy {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .normal {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .required {
+            color: #d28a00;
+            font-weight: bold;
+        }
+
+        /* CROP CARDS */
+
+        .crop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .crop-card {
+            background: #f7fbf7;
+            border: 1px solid #dcebdd;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .crop-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .crop-card-icon {
+            font-size: 35px;
+        }
+
+        .status {
+            background: #e5f6e9;
+            color: #198754;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .crop-card h3 {
+            color: #176b35;
+            font-size: 19px;
+            margin: 12px 0 5px;
+        }
+
+        .crop-card p {
+            color: #718074;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #245c36;
+        }
+
+        .progress-background {
+            width: 100%;
+            height: 10px;
+            background: #e4eee6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #198754;
+            border-radius: 10px;
+        }
+
+        /* GROWTH */
+
+        .growth-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .growth-card {
+            border: 1px solid #dcebdd;
+            border-radius: 15px;
+            padding: 20px;
+            background: #f7fbf7;
+        }
+
+        .growth-card h3 {
+            color: #176b35;
+            margin-bottom: 15px;
+        }
+
+        .growth-chart {
+            height: 220px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 12px;
+            padding: 15px 5px 5px;
+            border-bottom: 2px solid #cfe2d2;
+            border-left: 2px solid #cfe2d2;
+        }
+
+        .chart-column {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 1;
+        }
+
+        .chart-bar {
+            width: 45px;
+            background: #198754;
+            border-radius: 7px 7px 0 0;
+        }
+
+        .chart-label {
+            margin-top: 8px;
+            font-size: 10px;
+            color: #718074;
+        }
+
+        /* RECOMMENDATION */
+
+        .recommendation-box {
+            background: #edf8ef;
+            border: 1px solid #cfe2d2;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .recommendation-box h3 {
+            color: #176b35;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-box p {
+            color: #53665a;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .recommendation-list {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .recommendation-item {
+            background: white;
+            border: 1px solid #dcebdd;
+            padding: 12px;
+            border-radius: 10px;
+            color: #245c36;
+            font-size: 12px;
+        }
+
+        /* ACTIVITIES */
+
+        .activity-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .activity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f7fbf7;
+            border: 1px solid #dcebdd;
+            border-radius: 12px;
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            background: #edf8ef;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .activity strong {
+            display: block;
+            color: #176b35;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .activity span {
+            color: #718074;
+            font-size: 12px;
+        }
+
+        /* BACK BUTTON */
+
+        .back-button {
+            display: block;
+            width: 220px;
+            margin: 25px auto 0;
+            text-align: center;
+            text-decoration: none;
+            background: #198754;
+            color: white;
+            padding: 12px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #146c43;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .crop-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .growth-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recommendation-list {
+                grid-template-columns: 1fr;
+            }
+
+            .crop-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <h1>🌾 Crop Management</h1>
+
+        <p>
+            Monitor your crops, growth, health, irrigation and farming activities.
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="icon">🌾</div>
+
+            <h3>6</h3>
+
+            <p>Active Crops</p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="icon">❤️</div>
+
+            <h3>88%</h3>
+
+            <p>Average Crop Health</p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="icon">💧</div>
+
+            <h3>68%</h3>
+
+            <p>Soil Moisture</p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="icon">🚜</div>
+
+            <h3>45</h3>
+
+            <p>Days to Harvest</p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- CROP DETAILS -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>🌱 My Crops</h2>
+
+            <p>
+                Current crop information and field condition.
+            </p>
+
+        </div>
+
+
+        <table class="crop-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Crop</th>
+                    <th>Area</th>
+                    <th>Planting Date</th>
+                    <th>Growth Stage</th>
+                    <th>Health</th>
+                    <th>Irrigation</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td class="crop-name">🌾 Rice</td>
+
+                    <td>4 Acres</td>
+
+                    <td>10 June 2026</td>
+
+                    <td>Growing</td>
+
+                    <td class="healthy">90% Healthy</td>
+
+                    <td class="normal">Normal</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="crop-name">🌽 Maize</td>
+
+                    <td>3 Acres</td>
+
+                    <td>20 June 2026</td>
+
+                    <td>Growing</td>
+
+                    <td class="healthy">86% Healthy</td>
+
+                    <td class="required">Required</td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="crop-name">🌱 Ragi</td>
+
+                    <td>2 Acres</td>
+
+                    <td>05 July 2026</td>
+
+                    <td>Seedling</td>
+
+                    <td class="healthy">82% Healthy</td>
+
+                    <td class="normal">Normal</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- CROP HEALTH -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>❤️ Crop Health Monitoring</h2>
+
+            <p>
+                Current health condition of your major crops.
+            </p>
+
+        </div>
+
+
+        <div class="crop-grid">
+
+
+            <div class="crop-card">
+
+                <div class="crop-card-top">
+
+                    <div class="crop-card-icon">🌾</div>
+
+                    <div class="status">
+                        Healthy
+                    </div>
+
+                </div>
+
+                <h3>Rice</h3>
+
+                <p>
+                    Rice is growing well with good soil
+                    moisture and suitable conditions.
+                </p>
+
+                <div class="progress-title">
+
+                    <span>Crop Health</span>
+
+                    <span>90%</span>
+
+                </div>
+
+                <div class="progress-background">
+
+                    <div class="progress-bar"
+                         style="width: 90%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="crop-card">
+
+                <div class="crop-card-top">
+
+                    <div class="crop-card-icon">🌽</div>
+
+                    <div class="status">
+                        Good
+                    </div>
+
+                </div>
+
+                <h3>Maize</h3>
+
+                <p>
+                    Maize is developing well but requires
+                    regular irrigation.
+                </p>
+
+                <div class="progress-title">
+
+                    <span>Crop Health</span>
+
+                    <span>86%</span>
+
+                </div>
+
+                <div class="progress-background">
+
+                    <div class="progress-bar"
+                         style="width: 86%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="crop-card">
+
+                <div class="crop-card-top">
+
+                    <div class="crop-card-icon">🌱</div>
+
+                    <div class="status">
+                        Good
+                    </div>
+
+                </div>
+
+                <h3>Ragi</h3>
+
+                <p>
+                    Ragi is in the seedling stage and
+                    showing healthy development.
+                </p>
+
+                <div class="progress-title">
+
+                    <span>Crop Health</span>
+
+                    <span>82%</span>
+
+                </div>
+
+                <div class="progress-background">
+
+                    <div class="progress-bar"
+                         style="width: 82%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- CROP GROWTH -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>📈 Crop Growth Progress</h2>
+
+            <p>
+                Sample growth progress of your crops.
+            </p>
+
+        </div>
+
+
+        <div class="growth-grid">
+
+
+            <div class="growth-card">
+
+                <h3>🌾 Rice Growth</h3>
+
+                <div class="growth-chart">
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 25%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 1
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 40%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 2
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 55%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 3
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 70%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 4
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 85%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 5
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="growth-card">
+
+                <h3>🌽 Maize Growth</h3>
+
+                <div class="growth-chart">
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 20%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 1
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 35%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 2
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 50%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 3
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 65%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 4
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-column">
+
+                        <div class="chart-bar"
+                             style="height: 78%;">
+                        </div>
+
+                        <div class="chart-label">
+                            Week 5
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- IRRIGATION -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>💧 Irrigation Monitoring</h2>
+
+            <p>
+                Check water requirements for your crops.
+            </p>
+
+        </div>
+
+
+        <div class="crop-grid">
+
+
+            <div class="crop-card">
+
+                <div class="crop-card-icon">
+                    🌾
+                </div>
+
+                <h3>Rice</h3>
+
+                <p>
+                    Soil moisture: 68%
+                </p>
+
+                <div class="progress-title">
+
+                    <span>Water Level</span>
+
+                    <span>68%</span>
+
+                </div>
+
+                <div class="progress-background">
+
+                    <div class="progress-bar"
+                         style="width: 68%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="crop-card">
+
+                <div class="crop-card-icon">
+                    🌽
+                </div>
+
+                <h3>Maize</h3>
+
+                <p>
+                    Irrigation is required today.
+                </p>
+
+                <div class="progress-title">
+
+                    <span>Water Level</span>
+
+                    <span>42%</span>
+
+                </div>
+
+                <div class="progress-background">
+
+                    <div class="progress-bar"
+                         style="width: 42%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="crop-card">
+
+                <div class="crop-card-icon">
+                    🌱
+                </div>
+
+                <h3>Ragi</h3>
+
+                <p>
+                    Current moisture level is normal.
+                </p>
+
+                <div class="progress-title">
+
+                    <span>Water Level</span>
+
+                    <span>60%</span>
+
+                </div>
+
+                <div class="progress-background">
+
+                    <div class="progress-bar"
+                         style="width: 60%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- SMART RECOMMENDATION -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>🤖 Smart Crop Management Advice</h2>
+
+            <p>
+                Suggested actions based on current crop conditions.
+            </p>
+
+        </div>
+
+
+        <div class="recommendation-box">
+
+            <h3>
+                🌽 Maize needs attention
+            </h3>
+
+            <p>
+                Soil moisture is lower than the required level.
+                Consider irrigation for the maize field and
+                continue monitoring its growth.
+            </p>
+
+
+            <div class="recommendation-list">
+
+
+                <div class="recommendation-item">
+                    💧 Irrigate maize field
+                </div>
+
+
+                <div class="recommendation-item">
+                    🧪 Check soil nutrients
+                </div>
+
+
+                <div class="recommendation-item">
+                    🐛 Inspect leaves for pests
+                </div>
+
+
+                <div class="recommendation-item">
+                    📈 Monitor crop growth
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIVITIES -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>📅 Farming Activities</h2>
+
+            <p>
+                Recommended activities for today.
+            </p>
+
+        </div>
+
+
+        <div class="activity-list">
+
+
+            <div class="activity">
+
+                <div class="activity-icon">
+                    💧
+                </div>
+
+                <div>
+
+                    <strong>
+                        Irrigation
+                    </strong>
+
+                    <span>
+                        Check maize field moisture and provide water if required.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity">
+
+                <div class="activity-icon">
+                    🧪
+                </div>
+
+                <div>
+
+                    <strong>
+                        Soil Check
+                    </strong>
+
+                    <span>
+                        Monitor soil nutrients and pH levels.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity">
+
+                <div class="activity-icon">
+                    🐛
+                </div>
+
+                <div>
+
+                    <strong>
+                        Pest Monitoring
+                    </strong>
+
+                    <span>
+                        Inspect crop leaves and stems for pest activity.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity">
+
+                <div class="activity-icon">
+                    🌾
+                </div>
+
+                <div>
+
+                    <strong>
+                        Crop Monitoring
+                    </strong>
+
+                    <span>
+                        Record crop growth and health regularly.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK -->
+
+    <a href="/dashboard"
+       class="back-button">
+
+        ← Back to Home
+
+    </a>
+
+
+</div>
+
+</body>
+
+</html>
+

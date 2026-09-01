@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crop Recommendation | Smart Farm</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f8f3;
+            color: #245c36;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            color: #176b35;
+            font-size: 30px;
+        }
+
+        .page-title p {
+            color: #718074;
+            margin-top: 8px;
+        }
+
+
+        /* ==========================================
+           INPUT FORM
+        ========================================== */
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(30, 90, 45, 0.10);
+            margin-bottom: 30px;
+        }
+
+        .form-card h2 {
+            color: #176b35;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .form-card > p {
+            text-align: center;
+            color: #718074;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #245c36;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 1px solid #cfe2d2;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #198754;
+        }
+
+        .recommend-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #198754;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .recommend-button:hover {
+            background: #146c43;
+        }
+
+
+        /* ==========================================
+           RESULT CARD
+        ========================================== */
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(30, 90, 45, 0.10);
+            margin-bottom: 30px;
+        }
+
+        .result-title {
+            text-align: center;
+            color: #176b35;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .crop-name {
+            text-align: center;
+            font-size: 35px;
+            font-weight: bold;
+            color: #198754;
+        }
+
+
+        /* ==========================================
+           ROUND GRAPH
+        ========================================== */
+
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0 30px;
+        }
+
+        .circle {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #198754 calc(var(--percentage) * 1%),
+                    #e5f1e7 0
+                );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .circle::before {
+            content: "";
+            width: 140px;
+            height: 140px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .circle-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .circle-content strong {
+            display: block;
+            font-size: 38px;
+            color: #176b35;
+        }
+
+        .circle-content span {
+            font-size: 13px;
+            color: #718074;
+        }
+
+
+        /* ==========================================
+           INFORMATION BOXES
+        ========================================== */
+
+        .information-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .info-box {
+            background: #f5faf6;
+            border: 1px solid #dcebdd;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .info-box h3 {
+            color: #176b35;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #647268;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* ==========================================
+           COMPARISON GRAPH
+        ========================================== */
+
+        .comparison-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(30, 90, 45, 0.10);
+            margin-bottom: 30px;
+        }
+
+        .comparison-card h2 {
+            color: #176b35;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .comparison-card > p {
+            text-align: center;
+            color: #718074;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .bar-row {
+            margin-bottom: 22px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #245c36;
+        }
+
+        .bar-background {
+            width: 100%;
+            height: 28px;
+            background: #e8f1ea;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar {
+            height: 100%;
+            border-radius: 20px;
+            background: #198754;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .bar.best {
+            background: #176b35;
+        }
+
+
+        /* ==========================================
+           BACK BUTTON
+        ========================================== */
+
+        .back-button {
+            display: block;
+            width: 220px;
+            margin: 25px auto 0;
+            text-align: center;
+            text-decoration: none;
+            background: #198754;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #146c43;
+        }
+
+
+        /* ==========================================
+           RESPONSIVE
+        ========================================== */
+
+        @media (max-width: 750px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .form-grid,
+            .information-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card,
+            .result-card,
+            .comparison-card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==========================================
+         PAGE TITLE
+    ========================================== -->
+
+    <div class="page-title">
+
+        <h1>
+            🌱 Crop Recommendation
+        </h1>
+
+        <p>
+            Enter your farm details to find the most suitable crop
+        </p>
+
+    </div>
+
+
+    <!-- ==========================================
+         FARM INPUT FORM
+    ========================================== -->
+
+    <div class="form-card">
+
+        <h2>
+            🧪 Enter Farm Details
+        </h2>
+
+        <p>
+            Provide your soil and weather information
+        </p>
+
+
+        <form
+            action="/crop-recommendation"
+            method="POST"
+        >
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Nitrogen (N)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="nitrogen"
+                        step="0.01"
+                        placeholder="Example: 90"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phosphorus (P)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="phosphorus"
+                        step="0.01"
+                        placeholder="Example: 40"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Potassium (K)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="potassium"
+                        step="0.01"
+                        placeholder="Example: 40"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Temperature (°C)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="temperature"
+                        step="0.01"
+                        placeholder="Example: 28"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Humidity (%)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="humidity"
+                        step="0.01"
+                        placeholder="Example: 75"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Soil pH
+                    </label>
+
+                    <input
+                        type="number"
+                        name="ph"
+                        step="0.01"
+                        placeholder="Example: 6.5"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Rainfall (mm)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="rainfall"
+                        step="0.01"
+                        placeholder="Example: 200"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="recommend-button"
+            >
+                🌱 Get Crop Recommendation
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    {% if recommendation %}
+
+
+    <!-- ==========================================
+         RESULT
+    ========================================== -->
+
+    <div class="result-card">
+
+
+        <div class="result-title">
+
+            🌾 BEST CROP FOR YOUR FARM
+
+        </div>
+
+
+        <div class="crop-name">
+
+            {{ recommendation }}
+
+        </div>
+
+
+        <!-- ROUND SUITABILITY GRAPH -->
+
+        <div class="circle-container">
+
+            <div
+                class="circle"
+                style="--percentage: {{ suitability or 0 }};"
+            >
+
+                <div class="circle-content">
+
+                    <strong>
+                        {{ suitability or 0 }}%
+                    </strong>
+
+                    <span>
+                        Crop Suitability
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="information-grid">
+
+
+            <div class="info-box">
+
+                <h3>
+                    🌦️ Why this crop?
+                </h3>
+
+                <p>
+                    {{ reason }}
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h3>
+                    💧 Water Requirement
+                </h3>
+
+                <p>
+                    {{ water_need }}
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h3>
+                    💡 Farming Advice
+                </h3>
+
+                <p>
+                    {{ advice }}
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==========================================
+         CROP COMPARISON GRAPH
+    ========================================== -->
+
+    <div class="comparison-card">
+
+
+        <h2>
+            📊 Crop Suitability Comparison
+        </h2>
+
+        <p>
+            Sample comparison of different crops
+        </p>
+
+
+        <!-- RICE -->
+
+        <div class="bar-row">
+
+            <div class="bar-label">
+
+                <span>🌾 Rice</span>
+
+                <span>68%</span>
+
+            </div>
+
+            <div class="bar-background">
+
+                <div
+                    class="bar"
+                    style="width: 68%;"
+                >
+                    68%
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAIZE -->
+
+        <div class="bar-row">
+
+            <div class="bar-label">
+
+                <span>🌽 Maize</span>
+
+                <span>75%</span>
+
+            </div>
+
+            <div class="bar-background">
+
+                <div
+                    class="bar best"
+                    style="width: 75%;"
+                >
+                    75%
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RAGI -->
+
+        <div class="bar-row">
+
+            <div class="bar-label">
+
+                <span>🌱 Ragi</span>
+
+                <span>62%</span>
+
+            </div>
+
+            <div class="bar-background">
+
+                <div
+                    class="bar"
+                    style="width: 62%;"
+                >
+                    62%
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COTTON -->
+
+        <div class="bar-row">
+
+            <div class="bar-label">
+
+                <span>🌿 Cotton</span>
+
+                <span>55%</span>
+
+            </div>
+
+            <div class="bar-background">
+
+                <div
+                    class="bar"
+                    style="width: 55%;"
+                >
+                    55%
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WHEAT -->
+
+        <div class="bar-row">
+
+            <div class="bar-label">
+
+                <span>🌾 Wheat</span>
+
+                <span>48%</span>
+
+            </div>
+
+            <div class="bar-background">
+
+                <div
+                    class="bar"
+                    style="width: 48%;"
+                >
+                    48%
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    {% endif %}
+
+
+
+    <!-- ==========================================
+         BACK TO DASHBOARD
+    ========================================== -->
+
+    <a
+        href="/dashboard"
+        class="back-button"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Detection | Smart Farm</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f8f3;
+            color: #245c36;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+            color: #176b35;
+            font-size: 30px;
+        }
+
+        .title p {
+            color: #718074;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(30, 90, 45, 0.10);
+        }
+
+        .card h2 {
+            text-align: center;
+            color: #176b35;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            text-align: center;
+            color: #718074;
+            margin-bottom: 30px;
+        }
+
+        .upload-box {
+            border: 2px dashed #198754;
+            background: #f5faf6;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .upload-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .upload-box h3 {
+            color: #176b35;
+            margin-bottom: 8px;
+        }
+
+        .upload-box p {
+            color: #718074;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cfe2d2;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .detect-button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #198754;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .detect-button:hover {
+            background: #146c43;
+        }
+
+        .back-button {
+            display: block;
+            width: 220px;
+            margin: 25px auto 0;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            background: #176b35;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="title">
+
+        <h1>🦠 Plant Disease Detection</h1>
+
+        <p>
+            Upload a crop leaf image to detect possible diseases.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🌿 Upload Crop Leaf</h2>
+
+        <p class="card-description">
+            Select a clear image of the crop leaf.
+        </p>
+
+
+        <form
+            action="/disease-detection"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="upload-box">
+
+                <div class="upload-icon">
+                    🌿
+                </div>
+
+                <h3>
+                    Choose Leaf Image
+                </h3>
+
+                <p>
+                    Supported formats: JPG, JPEG, PNG
+                </p>
+
+                <input
+                    type="file"
+                    name="leaf_image"
+                    accept=".jpg,.jpeg,.png"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="detect-button"
+                >
+                    🔍 Detect Disease
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <a
+            href="/dashboard"
+            class="back-button"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
