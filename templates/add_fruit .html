@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Farm | Sell Your Fruit</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7f4;
+            color: #222;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0b5d2a;
+            color: white;
+            padding: 16px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: white;
+            color: #077531;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .logo h2 {
+            font-size: 21px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: #d7f0de;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.5);
+            padding: 9px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #0b5d2a;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .page-title h1 {
+            color: #0b5d2a;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* ================= CARD ================= */
+
+        .form-card {
+            background: white;
+            border-radius: 14px;
+            padding: 35px;
+            box-shadow: 0 6px 25px rgba(0,0,0,.08);
+            border: 1px solid #e3e8e3;
+        }
+
+        .form-title {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 18px;
+            margin-bottom: 25px;
+        }
+
+        .form-title h2 {
+            color: #222;
+            font-size: 21px;
+        }
+
+        .form-title p {
+            color: #777;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        /* ================= FORM GRID ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        label span {
+            color: #d32f2f;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #cfd6cf;
+            border-radius: 7px;
+            padding: 12px 13px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0b7a35;
+            box-shadow: 0 0 0 3px rgba(11,122,53,.08);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .hint {
+            color: #888;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        /* ================= PRICE ================= */
+
+        .price-row {
+            display: grid;
+            grid-template-columns: 1fr 130px;
+            gap: 10px;
+        }
+
+        /* ================= IMAGE ================= */
+
+        .image-upload {
+            border: 2px dashed #b8cdbd;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            background: #f8fbf8;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        .image-upload p {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        input[type="file"] {
+            border: none;
+            padding: 5px;
+        }
+
+        /* ================= TERMS ================= */
+
+        .terms {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f5faf6;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .terms input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 7px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cancel-btn {
+            background: #eeeeee;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background: #ddd;
+        }
+
+        .submit-btn {
+            background: #0b7a35;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #075b28;
+        }
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            margin-top: 25px;
+            background: #eaf6ed;
+            border-left: 4px solid #0b7a35;
+            padding: 17px;
+            border-radius: 6px;
+        }
+
+        .info-box h3 {
+            color: #0b5d2a;
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .info-box p {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 50px;
+            background: #073b1b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 12px;
+        }
+
+        footer p {
+            color: #bdd2c3;
+            margin-top: 6px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 14px 4%;
+            }
+
+            .main {
+                width: 94%;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .page-title h1 {
+                font-size: 27px;
+            }
+
+            .price-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌱
+        </div>
+
+        <div>
+
+            <h2>
+                SMART FARM
+            </h2>
+
+            <p>
+                Farmer Marketplace
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('shop') }}"
+        class="back-btn"
+    >
+        ← Back to Marketplace
+    </a>
+
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <div class="page-title">
+
+        <h1>
+            🍎 Sell Your Fruit
+        </h1>
+
+        <p>
+            List your fresh farm fruits and connect directly with buyers.
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+
+        <div class="form-title">
+
+            <h2>
+                📦 Fruit Product Details
+            </h2>
+
+            <p>
+                Enter the details of the fruit you want to sell.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR MESSAGE
+        ================================================== -->
+
+        {% if error %}
+
+        <div
+            style="
+                background:#ffebee;
+                color:#b71c1c;
+                border-left:4px solid #d32f2f;
+                padding:14px;
+                border-radius:6px;
+                margin-bottom:20px;
+                font-size:14px;
+            "
+        >
+
+            ❌ {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+        ================================================== -->
+
+        {% if success %}
+
+        <div
+            style="
+                background:#e8f5e9;
+                color:#1b5e20;
+                border-left:4px solid #2e7d32;
+                padding:14px;
+                border-radius:6px;
+                margin-bottom:20px;
+                font-size:14px;
+            "
+        >
+
+            ✅ {{ success }}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            action="{{ url_for('add_fruit') }}"
+            enctype="multipart/form-data"
+        >
+
+
+            <div class="form-grid">
+
+
+                <!-- FRUIT NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Fruit Name <span>*</span>
+                    </label>
+
+                    <select
+                        name="product_name"
+                        required
+                    >
+
+                        <option value="">
+                            Select Fruit
+                        </option>
+
+                        <option value="Apple">
+                            🍎 Apple
+                        </option>
+
+                        <option value="Banana">
+                            🍌 Banana
+                        </option>
+
+                        <option value="Mango">
+                            🥭 Mango
+                        </option>
+
+                        <option value="Orange">
+                            🍊 Orange
+                        </option>
+
+                        <option value="Grapes">
+                            🍇 Grapes
+                        </option>
+
+                        <option value="Watermelon">
+                            🍉 Watermelon
+                        </option>
+
+                        <option value="Pineapple">
+                            🍍 Pineapple
+                        </option>
+
+                        <option value="Strawberry">
+                            🍓 Strawberry
+                        </option>
+
+                        <option value="Papaya">
+                            🧡 Papaya
+                        </option>
+
+                        <option value="Guava">
+                            🍐 Guava
+                        </option>
+
+                        <option value="Pomegranate">
+                            ❤️ Pomegranate
+                        </option>
+
+                        <option value="Sapota">
+                            🟤 Sapota
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Selling Price <span>*</span>
+                    </label>
+
+                    <div class="price-row">
+
+                        <input
+                            type="number"
+                            name="price"
+                            min="1"
+                            step="0.01"
+                            placeholder="Enter price"
+                            required
+                        >
+
+
+                        <select name="unit">
+
+                            <option value="kg">
+                                ₹ / Kg
+                            </option>
+
+                            <option value="dozen">
+                                ₹ / Dozen
+                            </option>
+
+                            <option value="piece">
+                                ₹ / Piece
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <span class="hint">
+                        Enter your selling price.
+                    </span>
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Available Quantity <span>*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        name="quantity"
+                        min="1"
+                        step="0.01"
+                        placeholder="Example: 250"
+                        required
+                    >
+
+                    <span class="hint">
+                        Enter the total quantity available for sale.
+                    </span>
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Farm Location <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Example: Mysuru, Karnataka"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Product Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        placeholder="Describe your fruit quality, freshness, harvesting details, etc."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Fruit Photo
+                    </label>
+
+                    <div class="image-upload">
+
+                        <div class="upload-icon">
+                            🖼️
+                        </div>
+
+                        <p>
+                            Upload a clear photo of your fresh fruit.
+                        </p>
+
+                        <input
+                            type="file"
+                            name="image"
+                            accept=".jpg,.jpeg,.png,.webp"
+                        >
+
+                        <div class="hint">
+                            JPG, JPEG, PNG or WEBP only
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 TERMS
+            ================================================== -->
+
+            <div class="terms">
+
+                <label style="font-weight: normal;">
+
+                    <input
+                        type="checkbox"
+                        required
+                    >
+
+                    I confirm that the product information,
+                    available quantity and selling price entered
+                    above are correct.
+
+                </label>
+
+            </div>
+
+
+            <!-- =================================================
+                 BUTTONS
+            ================================================== -->
+
+            <div class="actions">
+
+
+                <a
+                    href="{{ url_for('shop') }}"
+                    class="btn cancel-btn"
+                >
+                    Cancel
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn submit-btn"
+                >
+                    🍎 List My Fruit
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+        <!-- =================================================
+             INFO
+        ================================================== -->
+
+        <div class="info-box">
+
+            <h3>
+                🌱 How it works
+            </h3>
+
+            <p>
+
+                Add your fruit details → Submit your product →
+                Your fruit will appear in the Smart Farm Marketplace →
+                Buyers can view and purchase your product.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <strong>
+        🌱 SMART FARM
+    </strong>
+
+    <p>
+        Connecting farmers directly with buyers.
+    </p>
+
+    <div style="margin-top:12px;">
+
+        © 2026 Smart Farm. All Rights Reserved.
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>
+

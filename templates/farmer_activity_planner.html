@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farmer Activity Planner | Smart Agriculture</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f8f4;
+        color: #263238;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1400px;
+        margin: 30px auto;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #176b35, #2e8b57);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+    }
+
+    .header h1 {
+        margin: 0 0 10px;
+        font-size: 32px;
+    }
+
+    .header p {
+        margin: 0;
+        font-size: 16px;
+        opacity: 0.95;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .summary-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .summary-card .icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .summary-card h3 {
+        margin: 5px 0;
+        font-size: 28px;
+    }
+
+    .summary-card p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .section {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #176b35;
+        font-size: 23px;
+    }
+
+    .filter-form {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr auto auto;
+        gap: 12px;
+        align-items: end;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 7px;
+        font-size: 14px;
+        color: #37474f;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid #cfd8dc;
+        border-radius: 7px;
+        font-size: 14px;
+        background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #2e8b57;
+        box-shadow: 0 0 0 2px rgba(46, 139, 87, 0.12);
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .btn {
+        border: none;
+        border-radius: 7px;
+        padding: 11px 18px;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: #176b35;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #0f5428;
+    }
+
+    .btn-secondary {
+        background: #e8eeee;
+        color: #263238;
+    }
+
+    .btn-secondary:hover {
+        background: #d8e0e0;
+    }
+
+    .activity-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-actions {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .activities-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1100px;
+    }
+
+    th {
+        background: #176b35;
+        color: white;
+        padding: 13px 10px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 13px 10px;
+        border-bottom: 1px solid #e5e5e5;
+        vertical-align: top;
+        font-size: 14px;
+    }
+
+    tr:hover {
+        background: #f8fbf8;
+    }
+
+    .priority {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .priority-low {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .priority-medium {
+        background: #fff8e1;
+        color: #f57f17;
+    }
+
+    .priority-high {
+        background: #ffebee;
+        color: #c62828;
+    }
+
+    .status-pending {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background: #fff8e1;
+        color: #f57f17;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .status-completed {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background: #e8f5e9;
+        color: #2e7d32;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .status-overdue {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background: #ffebee;
+        color: #c62828;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 7px;
+    }
+
+    .action-buttons a {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .complete {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .edit {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+
+    .delete {
+        background: #ffebee;
+        color: #c62828;
+    }
+
+    .complete:hover {
+        background: #c8e6c9;
+    }
+
+    .edit:hover {
+        background: #bbdefb;
+    }
+
+    .delete:hover {
+        background: #ffcdd2;
+    }
+
+    .empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: #777;
+    }
+
+    .back-container {
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    .back {
+        display: inline-block;
+        text-decoration: none;
+        color: #176b35;
+        font-weight: bold;
+    }
+
+    .back:hover {
+        text-decoration: underline;
+    }
+
+    .description {
+        max-width: 220px;
+        word-wrap: break-word;
+    }
+
+    @media (max-width: 1100px) {
+
+        .summary-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .filter-form {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        .container {
+            width: 94%;
+        }
+
+        .summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .activity-form {
+            grid-template-columns: 1fr;
+        }
+
+        .full-width {
+            grid-column: auto;
+        }
+
+        .form-actions {
+            grid-column: auto;
+        }
+
+        .filter-form {
+            grid-template-columns: 1fr;
+        }
+
+        .header h1 {
+            font-size: 25px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<div class="header">
+
+    <h1>🌾 Farmer Activity Planner</h1>
+
+    <p>
+        Plan, schedule and manage your farming activities easily.
+    </p>
+
+</div>
+
+
+<!-- =====================================================
+     SUMMARY
+====================================================== -->
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+
+        <div class="icon">📋</div>
+
+        <h3>{{ total }}</h3>
+
+        <p>Total Activities</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="icon">⏳</div>
+
+        <h3>{{ pending }}</h3>
+
+        <p>Pending</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="icon">✅</div>
+
+        <h3>{{ completed }}</h3>
+
+        <p>Completed</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="icon">⚠️</div>
+
+        <h3>{{ overdue }}</h3>
+
+        <p>Overdue</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="icon">📅</div>
+
+        <h3>{{ today_count }}</h3>
+
+        <p>Today</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="icon">🔜</div>
+
+        <h3>{{ upcoming }}</h3>
+
+        <p>Upcoming</p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SEARCH AND FILTER
+====================================================== -->
+
+<div class="section">
+
+    <h2 class="section-title">
+        🔍 Search & Filter Activities
+    </h2>
+
+
+    <form
+        method="GET"
+        action="{{ url_for('farmer_activity_planner') }}"
+        class="filter-form"
+    >
+
+        <div class="form-group">
+
+            <label for="search">
+                Search
+            </label>
+
+            <input
+                type="text"
+                id="search"
+                name="search"
+                placeholder="Crop, activity, location..."
+                value="{{ search }}"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="date">
+                Date
+            </label>
+
+            <input
+                type="date"
+                id="date"
+                name="date"
+                value="{{ filter_date }}"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="priority">
+                Priority
+            </label>
+
+            <select
+                id="priority"
+                name="priority"
+            >
+
+                <option value="">
+                    All Priorities
+                </option>
+
+                <option
+                    value="Low"
+                    {% if filter_priority == 'Low' %}selected{% endif %}
+                >
+                    Low
+                </option>
+
+                <option
+                    value="Medium"
+                    {% if filter_priority == 'Medium' %}selected{% endif %}
+                >
+                    Medium
+                </option>
+
+                <option
+                    value="High"
+                    {% if filter_priority == 'High' %}selected{% endif %}
+                >
+                    High
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="status">
+                Status
+            </label>
+
+            <select
+                id="status"
+                name="status"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option
+                    value="Pending"
+                    {% if filter_status == 'Pending' %}selected{% endif %}
+                >
+                    Pending
+                </option>
+
+                <option
+                    value="Completed"
+                    {% if filter_status == 'Completed' %}selected{% endif %}
+                >
+                    Completed
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            🔍 Search
+        </button>
+
+
+        <a
+            href="{{ url_for('farmer_activity_planner') }}"
+            class="btn btn-secondary"
+        >
+            Clear
+        </a>
+
+    </form>
+
+</div>
+
+
+<!-- =====================================================
+     ADD ACTIVITY
+====================================================== -->
+
+<div class="section">
+
+    <h2 class="section-title">
+        ➕ Add Farm Activity
+    </h2>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('farmer_activity_planner') }}"
+        class="activity-form"
+    >
+
+        <div class="form-group">
+
+            <label for="crop_name">
+                🌱 Crop Name
+            </label>
+
+            <input
+                type="text"
+                id="crop_name"
+                name="crop_name"
+                placeholder="Enter crop name"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="activity_type">
+                📋 Activity Type
+            </label>
+
+            <select
+                id="activity_type"
+                name="activity_type"
+                required
+            >
+
+                <option value="">
+                    Select Activity
+                </option>
+
+                <option value="Planting">
+                    Planting
+                </option>
+
+                <option value="Irrigation">
+                    Irrigation
+                </option>
+
+                <option value="Fertilizer Application">
+                    Fertilizer Application
+                </option>
+
+                <option value="Pesticide Application">
+                    Pesticide Application
+                </option>
+
+                <option value="Weeding">
+                    Weeding
+                </option>
+
+                <option value="Crop Inspection">
+                    Crop Inspection
+                </option>
+
+                <option value="Pest/Disease Inspection">
+                    Pest/Disease Inspection
+                </option>
+
+                <option value="Harvesting">
+                    Harvesting
+                </option>
+
+                <option value="Marketing/Sales">
+                    Marketing/Sales
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="activity_date">
+                📅 Activity Date
+            </label>
+
+            <input
+                type="date"
+                id="activity_date"
+                name="activity_date"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="reminder_time">
+                ⏰ Reminder Time
+            </label>
+
+            <input
+                type="time"
+                id="reminder_time"
+                name="reminder_time"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="priority">
+                🎯 Priority
+            </label>
+
+            <select
+                id="priority"
+                name="priority"
+            >
+
+                <option value="Low">
+                    Low
+                </option>
+
+                <option value="Medium" selected>
+                    Medium
+                </option>
+
+                <option value="High">
+                    High
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="location">
+                📍 Farm Location
+            </label>
+
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Enter farm location"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="assigned_person">
+                👤 Assigned Person
+            </label>
+
+            <input
+                type="text"
+                id="assigned_person"
+                name="assigned_person"
+                placeholder="Farmer / Worker name"
+            >
+
+        </div>
+
+
+        <div class="form-group full-width">
+
+            <label for="description">
+                📝 Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Enter activity details..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                ➕ Add Activity
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- =====================================================
+     ACTIVITIES TABLE
+====================================================== -->
+
+<div class="section">
+
+    <h2 class="section-title">
+        📋 My Farm Activities
+    </h2>
+
+
+    {% if activities %}
+
+    <div class="activities-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Time
+                    </th>
+
+                    <th>
+                        Crop
+                    </th>
+
+                    <th>
+                        Activity
+                    </th>
+
+                    <th>
+                        Priority
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Assigned Person
+                    </th>
+
+                    <th>
+                        Description
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for activity in activities %}
+
+                <tr>
+
+                    <td>
+                        {{ activity.activity_date }}
+                    </td>
+
+
+                    <td>
+
+                        {% if activity.reminder_time %}
+
+                            {{ activity.reminder_time }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        {{ activity.crop_name }}
+                    </td>
+
+
+                    <td>
+                        {{ activity.activity_type }}
+                    </td>
+
+
+                    <td>
+
+                        {% if activity.priority == 'Low' %}
+
+                            <span class="priority priority-low">
+                                Low
+                            </span>
+
+                        {% elif activity.priority == 'High' %}
+
+                            <span class="priority priority-high">
+                                High
+                            </span>
+
+                        {% else %}
+
+                            <span class="priority priority-medium">
+                                Medium
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if activity.location %}
+
+                            {{ activity.location }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if activity.assigned_person %}
+
+                            {{ activity.assigned_person }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td class="description">
+
+                        {% if activity.description %}
+
+                            {{ activity.description }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if activity.status == 'Completed' %}
+
+                            <span class="status-completed">
+                                ✅ Completed
+                            </span>
+
+                        {% elif today and activity.activity_date < today %}
+
+                            <span class="status-overdue">
+                                ⚠️ Overdue
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-pending">
+                                ⏳ Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            {% if activity.status != 'Completed' %}
+
+                            <a
+                                href="{{ url_for(
+                                    'complete_activity',
+                                    activity_id=activity.id
+                                ) }}"
+                                class="complete"
+                                onclick="return confirm('Mark this activity as completed?')"
+                                title="Complete Activity"
+                            >
+                                ✓
+                            </a>
+
+                            {% endif %}
+
+
+                            <a
+                                href="{{ url_for(
+                                    'edit_activity',
+                                    activity_id=activity.id
+                                ) }}"
+                                class="edit"
+                                title="Edit Activity"
+                            >
+                                ✏️
+                            </a>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'delete_activity',
+                                    activity_id=activity.id
+                                ) }}"
+                                class="delete"
+                                onclick="return confirm('Delete this activity?')"
+                                title="Delete Activity"
+                            >
+                                🗑
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+
+        <h3>
+            🌱 No Activities Found
+        </h3>
+
+        <p>
+            Add your first farm activity using the form above.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- =====================================================
+     BACK TO DASHBOARD
+====================================================== -->
+
+<div class="back-container">
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     SET TODAY AS DEFAULT DATE
+========================================================== -->
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const dateInput =
+            document.getElementById("activity_date");
+
+        if (dateInput && !dateInput.value) {
+
+            const today = new Date();
+
+            const year = today.getFullYear();
+
+            const month = String(
+                today.getMonth() + 1
+            ).padStart(2, "0");
+
+            const day = String(
+                today.getDate()
+            ).padStart(2, "0");
+
+            dateInput.value =
+                `${year}-${month}-${day}`;
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

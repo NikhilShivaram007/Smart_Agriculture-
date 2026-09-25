@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product | Smart Agriculture</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8f4;
+            color: #222;
+        }
+
+        header {
+            background: #176b35;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 750px;
+            margin: 35px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #176b35;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #176b35;
+        }
+
+        .location-box {
+            background: #f1f8f3;
+            border: 1px solid #b8d8c0;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 8px;
+        }
+
+        .location-button {
+            background: #176b35;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .location-button:hover {
+            background: #0f5428;
+        }
+
+        .location-button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .location-status {
+            margin-top: 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .coordinates {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .coordinates div {
+            flex: 1;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: #176b35;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            background: #0f5428;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #176b35;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 15px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .coordinates {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🌱 Smart Agriculture</h2>
+
+    <nav>
+        <a href="{{ url_for('farm_marketplace') }}">Marketplace</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h1>➕ Add Product</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div style="
+                    background:#e8f5e9;
+                    color:#176b35;
+                    padding:12px;
+                    border-radius:7px;
+                    margin-bottom:15px;
+                    text-align:center;
+                ">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST"
+          action="{{ url_for('add_product') }}"
+          enctype="multipart/form-data">
+
+        <!-- Product Name -->
+        <div class="form-group">
+            <label for="product_name">Product Name</label>
+
+            <input
+                type="text"
+                id="product_name"
+                name="product_name"
+                placeholder="Enter product name"
+                required
+            >
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+            <label for="category">Category</label>
+
+            <select id="category" name="category" required>
+
+                <option value="">Select Category</option>
+
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Grains">Grains</option>
+                <option value="Pulses">Pulses</option>
+                <option value="Spices">Spices</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Farm Equipment">Farm Equipment</option>
+                <option value="Other Farm Products">
+                    Other Farm Products
+                </option>
+
+            </select>
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+            <label for="price">Price (₹)</label>
+
+            <input
+                type="number"
+                id="price"
+                name="price"
+                min="0"
+                step="0.01"
+                placeholder="Enter price"
+                required
+            >
+        </div>
+
+        <!-- Quantity -->
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                min="0"
+                step="0.01"
+                placeholder="Enter quantity"
+                required
+            >
+        </div>
+
+        <!-- Unit -->
+        <div class="form-group">
+            <label for="unit">Unit</label>
+
+            <select id="unit" name="unit" required>
+
+                <option value="">Select Unit</option>
+                <option value="kg">Kilogram (kg)</option>
+                <option value="gram">Gram</option>
+                <option value="quintal">Quintal</option>
+                <option value="ton">Ton</option>
+                <option value="litre">Litre</option>
+                <option value="piece">Piece</option>
+
+            </select>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+
+            <label>📍 Product Location</label>
+
+            <div class="location-box">
+
+                <button
+                    type="button"
+                    class="location-button"
+                    id="locationButton"
+                    onclick="getCurrentLocation()"
+                >
+                    📍 Use My Current Location
+                </button>
+
+                <div
+                    id="locationStatus"
+                    class="location-status"
+                >
+                    Location not selected.
+                </div>
+
+                <div class="coordinates">
+
+                    <div>
+                        <label for="latitude">Latitude</label>
+
+                        <input
+                            type="text"
+                            id="latitude"
+                            name="latitude"
+                            placeholder="Latitude"
+                            readonly
+                        >
+                    </div>
+
+                    <div>
+                        <label for="longitude">Longitude</label>
+
+                        <input
+                            type="text"
+                            id="longitude"
+                            name="longitude"
+                            placeholder="Longitude"
+                            readonly
+                        >
+                    </div>
+
+                </div>
+
+                <div class="note">
+                    Allow location permission when your browser asks for it.
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Location Name -->
+        <div class="form-group">
+
+            <label for="location">Location Name</label>
+
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Example: Bengaluru, Karnataka"
+            >
+
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+
+            <label for="description">Description</label>
+
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Enter product description"
+            ></textarea>
+
+        </div>
+
+        <!-- Image -->
+        <div class="form-group">
+
+            <label for="image">Product Image</label>
+
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            class="submit-button"
+        >
+            ➕ Add Product
+        </button>
+
+    </form>
+
+    <a
+        href="{{ url_for('my_products') }}"
+        class="back-link"
+    >
+        ← Back to My Products
+    </a>
+
+</div>
+
+
+<script>
+
+function getCurrentLocation() {
+
+    const button = document.getElementById("locationButton");
+    const status = document.getElementById("locationStatus");
+
+    const latitude = document.getElementById("latitude");
+    const longitude = document.getElementById("longitude");
+
+    if (!navigator.geolocation) {
+
+        status.textContent =
+            "❌ Geolocation is not supported by this browser.";
+
+        status.style.color = "red";
+
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "📍 Getting Location...";
+
+    status.textContent =
+        "Please allow location permission...";
+
+    status.style.color = "#176b35";
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            latitude.value = lat.toFixed(6);
+            longitude.value = lon.toFixed(6);
+
+            status.textContent =
+                "✅ Current location detected successfully.";
+
+            status.style.color = "#176b35";
+
+            button.disabled = false;
+            button.textContent =
+                "📍 Location Detected";
+
+        },
+
+        function(error) {
+
+            button.disabled = false;
+            button.textContent =
+                "📍 Use My Current Location";
+
+            status.style.color = "red";
+
+            if (error.code === 1) {
+
+                status.textContent =
+                    "❌ Location permission was denied.";
+
+            } else if (error.code === 2) {
+
+                status.textContent =
+                    "❌ Location could not be determined.";
+
+            } else if (error.code === 3) {
+
+                status.textContent =
+                    "❌ Location request timed out.";
+
+            } else {
+
+                status.textContent =
+                    "❌ Unable to get your location.";
+
+            }
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+
+    );
+}
+
+</script>
+
+</body>
+</html>
+

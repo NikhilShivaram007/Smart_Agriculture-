@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farming Alerts & Notifications</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f8f4;
+        color: #333;
+    }
+
+    .container {
+        width: 94%;
+        max-width: 1250px;
+        margin: 30px auto;
+    }
+
+    /* HEADER */
+
+    .header {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid #dcebdd;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        color: #176b35;
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .header p {
+        color: #718074;
+        font-size: 14px;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 18px;
+        background: #176b35;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+
+    .back-btn:hover {
+        background: #12552a;
+    }
+
+    /* SUMMARY */
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .summary-card {
+        background: white;
+        padding: 18px 10px;
+        border-radius: 14px;
+        border: 1px solid #dcebdd;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .summary-icon {
+        font-size: 25px;
+        margin-bottom: 7px;
+    }
+
+    .summary-card h2 {
+        color: #176b35;
+        font-size: 23px;
+    }
+
+    .summary-card p {
+        color: #718074;
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    /* FILTER BOX */
+
+    .filter-box {
+        background: white;
+        padding: 22px;
+        border-radius: 16px;
+        border: 1px solid #dcebdd;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .filter-box h2 {
+        color: #176b35;
+        font-size: 19px;
+        margin-bottom: 18px;
+    }
+
+    .filter-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        gap: 12px;
+    }
+
+    .filter-grid input,
+    .filter-grid select {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #cfdacf;
+        border-radius: 8px;
+        outline: none;
+        font-size: 13px;
+        background: white;
+    }
+
+    .filter-grid input:focus,
+    .filter-grid select:focus {
+        border-color: #176b35;
+    }
+
+    .filter-btn {
+        border: none;
+        background: #176b35;
+        color: white;
+        padding: 11px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .filter-btn:hover {
+        background: #12552a;
+    }
+
+    .clear-btn {
+        display: inline-block;
+        margin-top: 12px;
+        color: #176b35;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    /* ALERT BOX */
+
+    .alerts-box {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid #dcebdd;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .alerts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .alerts-header h2 {
+        color: #176b35;
+        font-size: 21px;
+    }
+
+    .alerts-header span {
+        color: #718074;
+        font-size: 12px;
+    }
+
+    /* NOTIFICATION */
+
+    .notification {
+        display: flex;
+        gap: 15px;
+        padding: 18px;
+        margin-bottom: 15px;
+        border: 1px solid #e0e8e1;
+        border-radius: 13px;
+        background: white;
+        transition: 0.2s;
+    }
+
+    .notification:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    }
+
+    .notification.unread {
+        background: #f1f9f2;
+        border-left: 5px solid #176b35;
+    }
+
+    .notification-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #e8f5e9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        flex-shrink: 0;
+    }
+
+    .notification-content {
+        flex: 1;
+    }
+
+    .notification-content h3 {
+        color: #245c36;
+        font-size: 16px;
+        margin-bottom: 7px;
+    }
+
+    .notification-content p {
+        color: #66736a;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+
+    .notification-info {
+        color: #89958c;
+        font-size: 11px;
+    }
+
+    /* BADGES */
+
+    .badge {
+        display: inline-block;
+        padding: 5px 9px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .high {
+        background: #ffe5e5;
+        color: #c62828;
+    }
+
+    .medium {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .low {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .unread-badge {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+
+    .read-badge {
+        background: #eeeeee;
+        color: #666;
+    }
+
+    /* ACTIONS */
+
+    .notification-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        min-width: 105px;
+    }
+
+    .action-btn {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        padding: 8px 10px;
+        border-radius: 7px;
+        font-size: 11px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .read-btn {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+
+    .delete-btn {
+        background: #ffe5e5;
+        color: #c62828;
+    }
+
+    .action-btn:hover {
+        opacity: 0.8;
+    }
+
+    /* EMPTY */
+
+    .empty {
+        text-align: center;
+        padding: 65px 20px;
+    }
+
+    .empty-icon {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+
+    .empty h3 {
+        color: #176b35;
+        margin-bottom: 8px;
+    }
+
+    .empty p {
+        color: #718074;
+        font-size: 13px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1100px) {
+
+        .summary-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .filter-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        .summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .filter-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .notification {
+            flex-direction: column;
+        }
+
+        .notification-actions {
+            flex-direction: row;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>🔔 Farming Alerts & Notifications</h1>
+
+    <p>
+        Automatic farming alerts and important notifications for your farm.
+    </p>
+
+    <a href="{{ url_for('dashboard') }}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+
+<!-- SUMMARY -->
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+
+        <div class="summary-icon">🔔</div>
+
+        <h2>{{ total }}</h2>
+
+        <p>Total Alerts</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">📩</div>
+
+        <h2>{{ unread }}</h2>
+
+        <p>Unread</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">🔴</div>
+
+        <h2>{{ high }}</h2>
+
+        <p>High Priority</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">✅</div>
+
+        <h2>{{ read }}</h2>
+
+        <p>Read</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">📅</div>
+
+        <h2>{{ today_count }}</h2>
+
+        <p>Today's Alerts</p>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">⚠️</div>
+
+        <h2>{{ overdue_count }}</h2>
+
+        <p>Overdue</p>
+
+    </div>
+
+</div>
+
+
+<!-- SEARCH AND FILTER -->
+
+<div class="filter-box">
+
+    <h2>🔍 Search & Filter Notifications</h2>
+
+    <form method="GET"
+          action="{{ url_for('farming_alerts') }}">
+
+        <div class="filter-grid">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search notifications..."
+                value="{{ search }}"
+            >
+
+
+            <select name="alert_type">
+
+                <option value="">All Types</option>
+
+                <option value="Activity"
+                    {% if alert_type == 'Activity' %}selected{% endif %}>
+                    Activity
+                </option>
+
+                <option value="Irrigation"
+                    {% if alert_type == 'Irrigation' %}selected{% endif %}>
+                    Irrigation
+                </option>
+
+                <option value="Fertilizer"
+                    {% if alert_type == 'Fertilizer' %}selected{% endif %}>
+                    Fertilizer
+                </option>
+
+                <option value="Pest"
+                    {% if alert_type == 'Pest' %}selected{% endif %}>
+                    Pest
+                </option>
+
+                <option value="Disease"
+                    {% if alert_type == 'Disease' %}selected{% endif %}>
+                    Disease
+                </option>
+
+                <option value="Weather"
+                    {% if alert_type == 'Weather' %}selected{% endif %}>
+                    Weather
+                </option>
+
+                <option value="Harvest"
+                    {% if alert_type == 'Harvest' %}selected{% endif %}>
+                    Harvest
+                </option>
+
+                <option value="Marketing"
+                    {% if alert_type == 'Marketing' %}selected{% endif %}>
+                    Marketing
+                </option>
+
+                <option value="Expense"
+                    {% if alert_type == 'Expense' %}selected{% endif %}>
+                    Expense
+                </option>
+
+                <option value="Profit"
+                    {% if alert_type == 'Profit' %}selected{% endif %}>
+                    Profit & Loss
+                </option>
+
+            </select>
+
+
+            <select name="priority">
+
+                <option value="">All Priorities</option>
+
+                <option value="High"
+                    {% if priority == 'High' %}selected{% endif %}>
+                    High
+                </option>
+
+                <option value="Medium"
+                    {% if priority == 'Medium' %}selected{% endif %}>
+                    Medium
+                </option>
+
+                <option value="Low"
+                    {% if priority == 'Low' %}selected{% endif %}>
+                    Low
+                </option>
+
+            </select>
+
+
+            <select name="status">
+
+                <option value="">All Status</option>
+
+                <option value="Unread"
+                    {% if status == 'Unread' %}selected{% endif %}>
+                    Unread
+                </option>
+
+                <option value="Read"
+                    {% if status == 'Read' %}selected{% endif %}>
+                    Read
+                </option>
+
+            </select>
+
+
+            <button type="submit" class="filter-btn">
+                🔍 Search
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <a href="{{ url_for('farming_alerts') }}"
+       class="clear-btn">
+        ✖ Clear Filters
+    </a>
+
+</div>
+
+
+<!-- NOTIFICATIONS -->
+
+<div class="alerts-box">
+
+    <div class="alerts-header">
+
+        <h2>🔔 Notifications</h2>
+
+        <span>
+            Automatic alerts generated by the farming system
+        </span>
+
+    </div>
+
+
+    {% if alerts %}
+
+        {% for alert in alerts %}
+
+            <div class="notification
+                {% if alert['status'] == 'Unread' %}
+                    unread
+                {% endif %}
+            ">
+
+
+                <!-- ICON -->
+
+                <div class="notification-icon">
+
+                    {% if alert['alert_type'] == 'Irrigation' %}
+                        💧
+
+                    {% elif alert['alert_type'] == 'Fertilizer' %}
+                        🌱
+
+                    {% elif alert['alert_type'] == 'Pest' %}
+                        🐛
+
+                    {% elif alert['alert_type'] == 'Disease' %}
+                        🦠
+
+                    {% elif alert['alert_type'] == 'Weather' %}
+                        🌦️
+
+                    {% elif alert['alert_type'] == 'Harvest' %}
+                        🌾
+
+                    {% elif alert['alert_type'] == 'Marketing' %}
+                        💰
+
+                    {% elif alert['alert_type'] == 'Expense' %}
+                        💸
+
+                    {% elif alert['alert_type'] == 'Profit' %}
+                        📈
+
+                    {% elif alert['alert_type'] == 'Activity' %}
+                        📅
+
+                    {% else %}
+                        🔔
+                    {% endif %}
+
+                </div>
+
+
+                <!-- CONTENT -->
+
+                <div class="notification-content">
+
+                    <h3>
+                        {{ alert['title'] }}
+                    </h3>
+
+
+                    <p>
+                        {{ alert['message'] }}
+                    </p>
+
+
+                    <div class="notification-info">
+
+                        📅 {{ alert['alert_date'] }}
+
+
+                        {% if alert['priority'] == 'High' %}
+
+                            <span class="badge high">
+                                🔴 High
+                            </span>
+
+                        {% elif alert['priority'] == 'Medium' %}
+
+                            <span class="badge medium">
+                                🟡 Medium
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge low">
+                                🟢 Low
+                            </span>
+
+                        {% endif %}
+
+
+                        {% if alert['status'] == 'Unread' %}
+
+                            <span class="badge unread-badge">
+                                📩 Unread
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge read-badge">
+                                ✅ Read
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="notification-actions">
+
+                    {% if alert['status'] == 'Unread' %}
+
+                        <a
+                            href="{{ url_for('mark_alert_read', alert_id=alert['id']) }}"
+                            class="action-btn read-btn"
+                        >
+                            👁️ Mark Read
+                        </a>
+
+                    {% endif %}
+
+
+                    <a
+                        href="{{ url_for('delete_alert', alert_id=alert['id']) }}"
+                        class="action-btn delete-btn"
+                        onclick="return confirm('Delete this notification?');"
+                    >
+                        🗑️ Delete
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🔔
+            </div>
+
+            <h3>No Farming Notifications</h3>
+
+            <p>
+                Your automatic farming alerts will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+
+.venv/
+venv/
+env/
+
+database.db
+
+dataset/
+PlantVillage-Dataset-master/
+
+*.pth
+
+.env
+
+.vscode/

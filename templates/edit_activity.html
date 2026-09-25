@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Farm Activity | Smart Agriculture</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f8f4;
+        color: #263238;
+    }
+
+    .container {
+        width: 92%;
+        max-width: 900px;
+        margin: 40px auto;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #176b35, #2e8b57);
+        color: white;
+        padding: 30px;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .header h1 {
+        margin: 0 0 8px;
+        font-size: 30px;
+    }
+
+    .header p {
+        margin: 0;
+        font-size: 15px;
+    }
+
+    .form-container {
+        background: white;
+        padding: 30px;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #37474f;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cfd8dc;
+        border-radius: 7px;
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #2e8b57;
+        box-shadow: 0 0 0 2px rgba(46, 139, 87, 0.12);
+    }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .buttons {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        padding: 12px 22px;
+        border: none;
+        border-radius: 7px;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .btn-save {
+        background: #176b35;
+        color: white;
+    }
+
+    .btn-save:hover {
+        background: #0f5428;
+    }
+
+    .btn-cancel {
+        background: #e8eeee;
+        color: #263238;
+    }
+
+    .btn-cancel:hover {
+        background: #d8e0e0;
+    }
+
+    .activity-info {
+        background: #f1f8f3;
+        border-left: 4px solid #176b35;
+        padding: 15px;
+        margin-bottom: 25px;
+        border-radius: 6px;
+    }
+
+    .activity-info p {
+        margin: 5px 0;
+    }
+
+    @media (max-width: 700px) {
+
+        .container {
+            width: 94%;
+            margin: 20px auto;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full-width {
+            grid-column: auto;
+        }
+
+        .buttons {
+            grid-column: auto;
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<div class="header">
+
+    <h1>✏️ Edit Farm Activity</h1>
+
+    <p>
+        Update the details of your farming activity.
+    </p>
+
+</div>
+
+
+<div class="form-container">
+
+    <div class="activity-info">
+
+        <p>
+            <strong>Current Status:</strong>
+
+            {% if activity.status == 'Completed' %}
+
+                ✅ Completed
+
+            {% else %}
+
+                ⏳ Pending
+
+            {% endif %}
+
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for(
+            'edit_activity',
+            activity_id=activity.id
+        ) }}"
+    >
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label for="crop_name">
+                    🌱 Crop Name
+                </label>
+
+                <input
+                    type="text"
+                    id="crop_name"
+                    name="crop_name"
+                    value="{{ activity.crop_name }}"
+                    placeholder="Enter crop name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="activity_type">
+                    📋 Activity Type
+                </label>
+
+                <select
+                    id="activity_type"
+                    name="activity_type"
+                    required
+                >
+
+                    <option value="">
+                        Select Activity
+                    </option>
+
+                    <option
+                        value="Planting"
+                        {% if activity.activity_type == 'Planting' %}selected{% endif %}
+                    >
+                        Planting
+                    </option>
+
+                    <option
+                        value="Irrigation"
+                        {% if activity.activity_type == 'Irrigation' %}selected{% endif %}
+                    >
+                        Irrigation
+                    </option>
+
+                    <option
+                        value="Fertilizer Application"
+                        {% if activity.activity_type == 'Fertilizer Application' %}selected{% endif %}
+                    >
+                        Fertilizer Application
+                    </option>
+
+                    <option
+                        value="Pesticide Application"
+                        {% if activity.activity_type == 'Pesticide Application' %}selected{% endif %}
+                    >
+                        Pesticide Application
+                    </option>
+
+                    <option
+                        value="Weeding"
+                        {% if activity.activity_type == 'Weeding' %}selected{% endif %}
+                    >
+                        Weeding
+                    </option>
+
+                    <option
+                        value="Crop Inspection"
+                        {% if activity.activity_type == 'Crop Inspection' %}selected{% endif %}
+                    >
+                        Crop Inspection
+                    </option>
+
+                    <option
+                        value="Pest/Disease Inspection"
+                        {% if activity.activity_type == 'Pest/Disease Inspection' %}selected{% endif %}
+                    >
+                        Pest/Disease Inspection
+                    </option>
+
+                    <option
+                        value="Harvesting"
+                        {% if activity.activity_type == 'Harvesting' %}selected{% endif %}
+                    >
+                        Harvesting
+                    </option>
+
+                    <option
+                        value="Marketing/Sales"
+                        {% if activity.activity_type == 'Marketing/Sales' %}selected{% endif %}
+                    >
+                        Marketing/Sales
+                    </option>
+
+                    <option
+                        value="Other"
+                        {% if activity.activity_type == 'Other' %}selected{% endif %}
+                    >
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="activity_date">
+                    📅 Activity Date
+                </label>
+
+                <input
+                    type="date"
+                    id="activity_date"
+                    name="activity_date"
+                    value="{{ activity.activity_date }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="reminder_time">
+                    ⏰ Reminder Time
+                </label>
+
+                <input
+                    type="time"
+                    id="reminder_time"
+                    name="reminder_time"
+                    value="{{ activity.reminder_time or '' }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="priority">
+                    🎯 Priority
+                </label>
+
+                <select
+                    id="priority"
+                    name="priority"
+                >
+
+                    <option
+                        value="Low"
+                        {% if activity.priority == 'Low' %}selected{% endif %}
+                    >
+                        Low
+                    </option>
+
+                    <option
+                        value="Medium"
+                        {% if activity.priority == 'Medium' %}selected{% endif %}
+                    >
+                        Medium
+                    </option>
+
+                    <option
+                        value="High"
+                        {% if activity.priority == 'High' %}selected{% endif %}
+                    >
+                        High
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="location">
+                    📍 Farm Location
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    value="{{ activity.location or '' }}"
+                    placeholder="Enter farm location"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="assigned_person">
+                    👤 Assigned Person
+                </label>
+
+                <input
+                    type="text"
+                    id="assigned_person"
+                    name="assigned_person"
+                    value="{{ activity.assigned_person or '' }}"
+                    placeholder="Farmer / Worker name"
+                >
+
+            </div>
+
+
+            <div class="form-group full-width">
+
+                <label for="description">
+                    📝 Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Enter activity details..."
+                >{{ activity.description or '' }}</textarea>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="btn btn-save"
+                >
+                    💾 Save Changes
+                </button>
+
+
+                <a
+                    href="{{ url_for('farmer_activity_planner') }}"
+                    class="btn btn-cancel"
+                >
+                    ← Cancel
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+```
+
+</div>
+
+</body>
+
+</html>
