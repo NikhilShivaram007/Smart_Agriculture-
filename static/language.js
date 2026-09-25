@@ -25,7 +25,12 @@ const translations = {
         farmer: "Farmer",
         farmerAccount: "Farmer Account",
         myProfile: "My Profile",
+
         goodMorning: "Good Morning, Farmer!",
+        goodAfternoon: "Good Afternoon, Farmer!",
+        goodEvening: "Good Evening, Farmer!",
+        goodNight: "Good Night, Farmer!",
+
         manageFarm: "Manage your farm smarter and grow better.",
         yourSmartFarm: "Your Smart Farm",
         monitorFarm: "Monitor your farm, crops, market prices and fresh farm products in one place.",
@@ -69,7 +74,12 @@ const translations = {
         farmer: "किसान",
         farmerAccount: "किसान खाता",
         myProfile: "मेरी प्रोफ़ाइल",
+
         goodMorning: "सुप्रभात, किसान!",
+        goodAfternoon: "शुभ दोपहर, किसान!",
+        goodEvening: "शुभ संध्या, किसान!",
+        goodNight: "शुभ रात्रि, किसान!",
+
         manageFarm: "अपने खेत को स्मार्ट तरीके से प्रबंधित करें और बेहतर उत्पादन करें।",
         yourSmartFarm: "आपका स्मार्ट फार्म",
         monitorFarm: "अपने खेत, फसलों, बाजार कीमतों और ताज़ा कृषि उत्पादों की निगरानी एक ही जगह करें।",
@@ -113,7 +123,12 @@ const translations = {
         farmer: "ರೈತ",
         farmerAccount: "ರೈತರ ಖಾತೆ",
         myProfile: "ನನ್ನ ಪ್ರೊಫೈಲ್",
+
         goodMorning: "ಶುಭೋದಯ, ರೈತರೆ!",
+        goodAfternoon: "ಶುಭ ಮಧ್ಯಾಹ್ನ, ರೈತರೆ!",
+        goodEvening: "ಶುಭ ಸಂಜೆ, ರೈತರೆ!",
+        goodNight: "ಶುಭ ರಾತ್ರಿ, ರೈತರೆ!",
+
         manageFarm: "ನಿಮ್ಮ ಕೃಷಿಯನ್ನು ಸ್ಮಾರ್ಟ್ ರೀತಿಯಲ್ಲಿ ನಿರ್ವಹಿಸಿ ಮತ್ತು ಉತ್ತಮವಾಗಿ ಬೆಳೆಸಿ.",
         yourSmartFarm: "ನಿಮ್ಮ ಸ್ಮಾರ್ಟ್ ಫಾರ್ಮ್",
         monitorFarm: "ನಿಮ್ಮ ಕೃಷಿ, ಬೆಳೆಗಳು, ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳು ಮತ್ತು ತಾಜಾ ಕೃಷಿ ಉತ್ಪನ್ನಗಳನ್ನು ಒಂದೇ ಸ್ಥಳದಲ್ಲಿ ಗಮನಿಸಿ.",
@@ -157,7 +172,12 @@ const translations = {
         farmer: "விவசாயி",
         farmerAccount: "விவசாயி கணக்கு",
         myProfile: "எனது சுயவிவரம்",
+
         goodMorning: "காலை வணக்கம், விவசாயி!",
+        goodAfternoon: "மதிய வணக்கம், விவசாயி!",
+        goodEvening: "மாலை வணக்கம், விவசாயி!",
+        goodNight: "இரவு வணக்கம், விவசாயி!",
+
         manageFarm: "உங்கள் பண்ணையை புத்திசாலித்தனமாக நிர்வகித்து சிறப்பாக வளருங்கள்.",
         yourSmartFarm: "உங்கள் ஸ்மார்ட் பண்ணை",
         monitorFarm: "உங்கள் பண்ணை, பயிர்கள், சந்தை விலைகள் மற்றும் புதிய விவசாயப் பொருட்களை ஒரே இடத்தில் கண்காணிக்கவும்.",
@@ -201,7 +221,12 @@ const translations = {
         farmer: "రైతు",
         farmerAccount: "రైతు ఖాతా",
         myProfile: "నా ప్రొఫైల్",
+
         goodMorning: "శుభోదయం, రైతు!",
+        goodAfternoon: "శుభ మధ్యాహ్నం, రైతు!",
+        goodEvening: "శుభ సాయంత్రం, రైతు!",
+        goodNight: "శుభ రాత్రి, రైతు!",
+
         manageFarm: "మీ వ్యవసాయాన్ని స్మార్ట్‌గా నిర్వహించి మంచి దిగుబడి పొందండి.",
         yourSmartFarm: "మీ స్మార్ట్ ఫార్మ్",
         monitorFarm: "మీ వ్యవసాయం, పంటలు, మార్కెట్ ధరలు మరియు తాజా వ్యవసాయ ఉత్పత్తులను ఒకే చోట పర్యవేక్షించండి.",
@@ -245,7 +270,12 @@ const translations = {
         farmer: "കർഷകൻ",
         farmerAccount: "കർഷക അക്കൗണ്ട്",
         myProfile: "എന്റെ പ്രൊഫൈൽ",
+
         goodMorning: "സുപ്രഭാതം, കർഷകാ!",
+        goodAfternoon: "ശുഭ ഉച്ചയ്ക്ക്, കർഷകാ!",
+        goodEvening: "ശുഭ സായാഹ്നം, കർഷകാ!",
+        goodNight: "ശുഭ രാത്രി, കർഷകാ!",
+
         manageFarm: "നിങ്ങളുടെ കൃഷി സ്മാർട്ടായി നിയന്ത്രിച്ച് മികച്ച രീതിയിൽ വളർത്തുക.",
         yourSmartFarm: "നിങ്ങളുടെ സ്മാർട്ട് ഫാം",
         monitorFarm: "നിങ്ങളുടെ ഫാം, വിളകൾ, വിപണി വിലകൾ, പുതിയ കാർഷിക ഉൽപ്പന്നങ്ങൾ എന്നിവ ഒരിടത്ത് നിരീക്ഷിക്കുക.",
@@ -289,7 +319,12 @@ const translations = {
         farmer: "शेतकरी",
         farmerAccount: "शेतकरी खाते",
         myProfile: "माझे प्रोफाइल",
+
         goodMorning: "शुभ सकाळ, शेतकरी!",
+        goodAfternoon: "शुभ दुपार, शेतकरी!",
+        goodEvening: "शुभ संध्याकाळ, शेतकरी!",
+        goodNight: "शुभ रात्री, शेतकरी!",
+
         manageFarm: "तुमची शेती स्मार्ट पद्धतीने व्यवस्थापित करा आणि चांगली वाढ करा.",
         yourSmartFarm: "तुमचे स्मार्ट फार्म",
         monitorFarm: "तुमची शेती, पिके, बाजारभाव आणि ताजी कृषी उत्पादने एकाच ठिकाणी पाहा.",
@@ -333,7 +368,12 @@ const translations = {
         farmer: "কৃষক",
         farmerAccount: "কৃষক অ্যাকাউন্ট",
         myProfile: "আমার প্রোফাইল",
+
         goodMorning: "সুপ্রভাত, কৃষক!",
+        goodAfternoon: "শুভ অপরাহ্ন, কৃষক!",
+        goodEvening: "শুভ সন্ধ্যা, কৃষক!",
+        goodNight: "শুভ রাত্রি, কৃষক!",
+
         manageFarm: "আপনার খামার স্মার্টভাবে পরিচালনা করুন এবং আরও ভালোভাবে চাষ করুন।",
         yourSmartFarm: "আপনার স্মার্ট ফার্ম",
         monitorFarm: "আপনার খামার, ফসল, বাজার মূল্য এবং তাজা কৃষি পণ্য এক জায়গায় পর্যবেক্ষণ করুন।",
@@ -377,7 +417,12 @@ const translations = {
         farmer: "ખેડૂત",
         farmerAccount: "ખેડૂત ખાતું",
         myProfile: "મારી પ્રોફાઇલ",
+
         goodMorning: "સુપ્રભાત, ખેડૂત!",
+        goodAfternoon: "શુભ બપોર, ખેડૂત!",
+        goodEvening: "શુભ સાંજ, ખેડૂત!",
+        goodNight: "શુભ રાત્રિ, ખેડૂત!",
+
         manageFarm: "તમારા ખેતરને સ્માર્ટ રીતે મેનેજ કરો અને વધુ સારું ઉત્પાદન મેળવો.",
         yourSmartFarm: "તમારું સ્માર્ટ ફાર્મ",
         monitorFarm: "તમારા ખેતર, પાક, બજાર ભાવ અને તાજા કૃષિ ઉત્પાદનોને એક જ જગ્યાએ જુઓ.",
@@ -421,7 +466,12 @@ const translations = {
         farmer: "ਕਿਸਾਨ",
         farmerAccount: "ਕਿਸਾਨ ਖਾਤਾ",
         myProfile: "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ",
+
         goodMorning: "ਸ਼ੁਭ ਸਵੇਰ, ਕਿਸਾਨ!",
+        goodAfternoon: "ਸ਼ੁਭ ਦੁਪਹਿਰ, ਕਿਸਾਨ!",
+        goodEvening: "ਸ਼ੁਭ ਸ਼ਾਮ, ਕਿਸਾਨ!",
+        goodNight: "ਸ਼ੁਭ ਰਾਤ, ਕਿਸਾਨ!",
+
         manageFarm: "ਆਪਣੇ ਖੇਤ ਨੂੰ ਸਮਾਰਟ ਤਰੀਕੇ ਨਾਲ ਪ੍ਰਬੰਧਿਤ ਕਰੋ ਅਤੇ ਵਧੀਆ ਫਸਲ ਉਗਾਓ।",
         yourSmartFarm: "ਤੁਹਾਡਾ ਸਮਾਰਟ ਫਾਰਮ",
         monitorFarm: "ਆਪਣੇ ਖੇਤ, ਫਸਲਾਂ, ਬਾਜ਼ਾਰ ਕੀਮਤਾਂ ਅਤੇ ਤਾਜ਼ਾ ਖੇਤੀ ਉਤਪਾਦਾਂ ਨੂੰ ਇੱਕੋ ਥਾਂ 'ਤੇ ਦੇਖੋ।",
@@ -459,6 +509,52 @@ function changeLanguage(language) {
 
 
 // ============================================================
+// GET CURRENT GREETING
+// ============================================================
+
+function getGreetingKey() {
+
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+        return "goodMorning";
+    }
+
+    if (hour >= 12 && hour < 17) {
+        return "goodAfternoon";
+    }
+
+    if (hour >= 17 && hour < 21) {
+        return "goodEvening";
+    }
+
+    return "goodNight";
+}
+
+
+// ============================================================
+// UPDATE TIME-BASED GREETING
+// ============================================================
+
+function updateGreeting(language) {
+
+    if (!translations[language]) {
+        language = "english";
+    }
+
+    const selectedLanguage = translations[language];
+    const greetingKey = getGreetingKey();
+
+    const greetingElement =
+        document.querySelector('[data-translate="goodMorning"]');
+
+    if (greetingElement && selectedLanguage[greetingKey]) {
+        greetingElement.textContent = selectedLanguage[greetingKey];
+    }
+}
+
+
+// ============================================================
 // APPLY LANGUAGE
 // ============================================================
 
@@ -487,6 +583,9 @@ function applyLanguage(language) {
     }
 
     document.documentElement.lang = language;
+
+    // Update greeting according to current time
+    updateGreeting(language);
 }
 
 
@@ -501,4 +600,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     applyLanguage(savedLanguage);
 
+    // Keep greeting updated
+    setInterval(function() {
+
+        const currentLanguage =
+            localStorage.getItem("smartFarmLanguage") || "english";
+
+        updateGreeting(currentLanguage);
+
+    }, 60000);
+
 });
+

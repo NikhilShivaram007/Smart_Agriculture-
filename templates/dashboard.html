@@ -1003,8 +1003,8 @@
             </div>
 
             <div>
-                <h2>SMART FARM</h2>
-                <p>Agriculture System</p>
+                <h2 data-translate="smartFarm">SMART FARM</h2>
+                <p data-translate="agricultureSystem">Agriculture System</p>
             </div>
 
         </div>
@@ -1019,8 +1019,8 @@
                 </div>
 
                 <div>
-                    <strong>Farmer</strong>
-                    <span>Farmer Account</span>
+                    <strong data-translate="farmer">Farmer</strong>
+                    <span><span data-translate="farmerAccount">Farmer Account</span></span>
                 </div>
 
             </a>
@@ -1035,31 +1035,31 @@
             </a>
             <a href="{{ url_for('agribot') }}">
                 <span>🤖</span>
-                AgriGuide
+                <span data-translate="agriguide">AgriGuide</span>
             </a>
             <a href="/crop-recommendation">
                 <span>🌱</span>
-                Crop Recommendation
+                <span data-translate="cropRecommendation">Crop Recommendation</span>
             </a>
 
             <a href="/crop-management">
                 <span>🌾</span>
-                Crop Management
+                <span data-translate="cropManagement">Crop Management</span>
             </a>
 
             <a href="/disease-detection">
                 <span>🦠</span>
-                Disease Detection
+                <span data-translate="diseaseDetection">Disease Detection</span>
             </a>
 
             <a href="/weather">
                 <span>🌦️</span>
-                Weather Advisory
+                <span data-translate="weatherAdvisory">Weather Advisory</span>
             </a>
 
             <a href="/shop">
                 <span>🛒</span>
-                Farm Marketplace
+                <span data-translate="farmMarketplace">Farm Marketplace</span>
             </a>
 
             <!-- CORRECTED: OPENS SEPARATE EXPENSE MANAGEMENT PAGE -->
@@ -1080,7 +1080,8 @@
                 <span data-translate="farmingAlerts">Farming Alerts & Notifications</span>
             </a>
             <a href="/farm-waste">
-                🌱 Farm Waste
+                <span>🌱</span>
+                <span data-translate="farmWaste">Farm Waste</span>
             </a>
 
         </nav>
@@ -1094,7 +1095,7 @@
 
             <a href="/logout" class="logout-link">
                 <span>🚪</span>
-                Logout
+                <span data-translate="logout">Logout</span>
             </a>
 
         </div>
@@ -1108,11 +1109,10 @@
             <div>
 
                 <h1>
-                    Good Morning, Farmer! 👨‍🌾
+                    <span id="greeting" data-translate="goodMorning">Good Morning, Farmer!</span> 👨‍🌾
                 </h1>
-
                 <p>
-                    Manage your farm smarter and grow better.
+                    <span data-translate="manageFarm">Manage your farm smarter and grow better.</span>
                 </p>
 
             </div>
@@ -1156,7 +1156,7 @@
                         </strong>
 
                         <small>
-                            My Profile
+                            <span data-translate="myProfile">My Profile</span>
                         </small>
 
                     </div>
@@ -1170,12 +1170,12 @@
         <section class="home-title">
 
             <h2>
-                🌾 Your Smart Farm
+                🌾 <span data-translate="yourSmartFarm">Your Smart Farm</span>
             </h2>
 
             <p>
-                Monitor your farm, crops, market prices
-                and fresh farm products in one place.
+                <span data-translate="monitorFarm">Monitor your farm, crops, market prices and fresh farm products in
+                    one place.</span>
             </p>
 
         </section>
@@ -1190,11 +1190,11 @@
 
                 <div>
 
-                    <span>My Crops</span>
+                    <span data-translate="myCrops">My Crops</span>
 
                     <strong>6</strong>
 
-                    <small>Active crops</small>
+                    <small><span data-translate="myCrops">Active crops</span></small>
 
                 </div>
 
@@ -1208,11 +1208,11 @@
 
                 <div>
 
-                    <span>Farm Area</span>
+                    <span data-translate="farmArea">Farm Area</span>
 
                     <strong>12</strong>
 
-                    <small>Acres</small>
+                    <small><span data-translate="farmArea">Acres</span></small>
 
                 </div>
 
@@ -1226,7 +1226,7 @@
 
                 <div>
 
-                    <span>Temperature</span>
+                    <span data-translate="temperature">Temperature</span>
 
                     <strong>28°C</strong>
 
@@ -1244,7 +1244,7 @@
 
                 <div>
 
-                    <span>Expected Yield</span>
+                    <span data-translate="expectedYield">Expected Yield</span>
 
                     <strong>85%</strong>
 
@@ -1262,7 +1262,7 @@
 
                 <div>
 
-                    <span>Special Offers</span>
+                    <span data-translate="specialOffers">Special Offers</span>
 
                     <strong>5</strong>
 
@@ -1288,9 +1288,9 @@
 
                 <div class="expense-info">
 
-                    <span>Total Expense</span>
+                    <span data-translate="totalExpense">Total Expense</span>
 
-                    <small>Farm expenses</small>
+                    <small><span data-translate="farmExpenses">Farm expenses</span></small>
 
                 </div>
 
@@ -1304,7 +1304,7 @@
 
                 <div>
 
-                    <h2>📊 Farm Statistics</h2>
+                    <h2>📊 <span data-translate="farmStatistics">Farm Statistics</span></h2>
 
                     <p>
                         Important information about your farm
@@ -1330,7 +1330,7 @@
 
                     </div>
 
-                    <h3>🌾 Crop Health</h3>
+                    <h3>🌾 <span data-translate="cropHealth">Crop Health</span></h3>
 
                     <p>Overall crop condition</p>
 
@@ -1350,7 +1350,7 @@
 
                     </div>
 
-                    <h3>🧪 Soil Health</h3>
+                    <h3>🧪 <span data-translate="soilHealth">Soil Health</span></h3>
 
                     <p>Good soil condition</p>
 
@@ -1370,7 +1370,7 @@
 
                     </div>
 
-                    <h3>💧 Soil Moisture</h3>
+                    <h3>💧 <span data-translate="soilMoisture">Soil Moisture</span></h3>
 
                     <p>Water level in soil</p>
 
@@ -1390,7 +1390,7 @@
 
                     </div>
 
-                    <h3>📊 Yield Performance</h3>
+                    <h3>📊 <span data-translate="yieldPerformance">Yield Performance</span></h3>
 
                     <p>Estimated crop performance</p>
 
@@ -1404,7 +1404,7 @@
 
             <div class="crop-management-header">
 
-                <h2>🌾 Crop Management</h2>
+                <h2>🌾 <span data-translate="cropManagementTitle">Crop Management</span></h2>
 
                 <p>
                     Monitor your crops, growth, irrigation,
@@ -1429,7 +1429,7 @@
                     </p>
 
                     <a href="/crop-management" class="management-button">
-                        Open Crop Management →
+                        Open <span data-translate="cropManagement">Crop Management</span> →
                     </a>
 
                 </div>
@@ -1483,7 +1483,7 @@
                 <div>
 
                     <h2>
-                        💰 Today's Market Prices
+                        💰 <span data-translate="todaysMarketPrices">Today's Market Prices</span>
                     </h2>
 
                     <p>
@@ -1604,7 +1604,7 @@
                 <div>
 
                     <h2>
-                        🛍️ Farm Products
+                        🛍️ <span data-translate="farmProducts">Farm Products</span>
                     </h2>
 
                     <p>
@@ -1833,7 +1833,7 @@
         <section class="offers-section">
 
             <h2>
-                🏷️ Special Offers
+                🏷️ <span data-translate="specialOffersTitle">Special Offers</span>
             </h2>
 
             <div class="offers-list">
@@ -1861,7 +1861,7 @@
         <section class="farming-features">
 
             <h2>
-                🌱 Smart Farming Features
+                🌱 <span data-translate="smartFarmingFeatures">Smart Farming Features</span>
             </h2>
 
             <div class="feature-buttons">
@@ -1890,7 +1890,7 @@
 
                 <!-- CORRECTED: MARKET PRICES PAGE -->
                 <a href="/market-prices" class="feature-button">
-                    💰 Market Prices
+                    💰 <span data-translate="todaysMarketPrices">Market Prices</span>
                 </a>
 
                 <a href="/shop">
@@ -1904,12 +1904,13 @@
 
         <footer class="farmer-footer">
 
-            🌱 SMART FARMING • BETTER FUTURE 🌱
+            🌱 <span data-translate="smartFarmingFeatures">SMART FARMING • BETTER FUTURE</span> 🌱
 
         </footer>
 
     </main>
     <script src="{{ url_for('static', filename='language.js') }}"></script>
+   
 </body>
 
 </html>
