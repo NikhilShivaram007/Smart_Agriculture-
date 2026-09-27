@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Expense | Smart Agriculture</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f4;
+            color: #333;
+        }
+
+        .header {
+            background: #176b35;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            background: #0f5428;
+            padding: 10px 18px;
+            border-radius: 6px;
+        }
+
+        .header a:hover {
+            background: #0b3f1e;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 700px;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #176b35;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #176b35;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .save-button {
+            flex: 1;
+            border: none;
+            background: #176b35;
+            color: white;
+            padding: 13px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #0f5428;
+        }
+
+        .cancel-button {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            background: #777;
+            color: white;
+            padding: 13px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .cancel-button:hover {
+            background: #555;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>🌾 Smart Agriculture</h1>
+
+        <a href="{{ url_for('expense_management') }}">
+            ← Expenses
+        </a>
+
+    </header>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>➕ Add New Expense</h2>
+
+
+            <form method="POST"
+                  action="{{ url_for('add_expense') }}">
+
+
+                <!-- Expense Category -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Expense Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Seeds">
+                            🌱 Seeds
+                        </option>
+
+                        <option value="Fertilizer">
+                            🌿 Fertilizer
+                        </option>
+
+                        <option value="Pesticides">
+                            🧪 Pesticides
+                        </option>
+
+                        <option value="Labour">
+                            👨‍🌾 Labour
+                        </option>
+
+                        <option value="Irrigation">
+                            💧 Irrigation
+                        </option>
+
+                        <option value="Equipment">
+                            🚜 Equipment
+                        </option>
+
+                        <option value="Fuel / Diesel">
+                            ⛽ Fuel / Diesel
+                        </option>
+
+                        <option value="Electricity">
+                            ⚡ Electricity
+                        </option>
+
+                        <option value="Water">
+                            💧 Water
+                        </option>
+
+                        <option value="Machinery Repair">
+                            🔧 Machinery Repair
+                        </option>
+
+                        <option value="Tractor">
+                            🚜 Tractor
+                        </option>
+
+                        <option value="Transport">
+                            🚚 Transport
+                        </option>
+
+                        <option value="Land Preparation">
+                            🌾 Land Preparation
+                        </option>
+
+                        <option value="Harvesting">
+                            🌾 Harvesting
+                        </option>
+
+                        <option value="Storage">
+                            🏠 Storage
+                        </option>
+
+                        <option value="Packaging">
+                            📦 Packaging
+                        </option>
+
+                        <option value="Animal Feed">
+                            🐄 Animal Feed
+                        </option>
+
+                        <option value="Veterinary">
+                            🩺 Veterinary
+                        </option>
+
+                        <option value="Farm Rent">
+                            🏡 Farm Rent
+                        </option>
+
+                        <option value="Land Rent">
+                            🌱 Land Rent
+                        </option>
+
+                        <option value="Insurance">
+                            🛡️ Insurance
+                        </option>
+
+                        <option value="Loan / Interest">
+                            💰 Loan / Interest
+                        </option>
+
+                        <option value="Mobile / Internet">
+                            📱 Mobile / Internet
+                        </option>
+
+                        <option value="Maintenance">
+                            🛠️ Maintenance
+                        </option>
+
+                        <option value="Other">
+                            📦 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Amount -->
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Expense Amount (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="Enter amount"
+                        required>
+
+                </div>
+
+
+                <!-- Date -->
+
+                <div class="form-group">
+
+                    <label for="expense_date">
+                        Expense Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="expense_date"
+                        name="expense_date"
+                        required>
+
+                </div>
+
+
+                <!-- Crop -->
+
+                <div class="form-group">
+
+                    <label for="crop">
+                        Crop
+                    </label>
+
+                    <input
+                        type="text"
+                        id="crop"
+                        name="crop"
+                        placeholder="Example: Rice, Wheat, Tomato">
+
+                </div>
+
+
+                <!-- Payment Method -->
+
+                <div class="form-group">
+
+                    <label for="payment_method">
+                        Payment Method
+                    </label>
+
+                    <select
+                        id="payment_method"
+                        name="payment_method">
+
+                        <option value="Cash">
+                            💵 Cash
+                        </option>
+
+                        <option value="UPI">
+                            📱 UPI
+                        </option>
+
+                        <option value="Bank Transfer">
+                            🏦 Bank Transfer
+                        </option>
+
+                        <option value="Card">
+                            💳 Card
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Receipt Number -->
+
+                <div class="form-group">
+
+                    <label for="receipt_number">
+                        Receipt Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="receipt_number"
+                        name="receipt_number"
+                        placeholder="Enter receipt number">
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description / Notes
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Enter expense details"></textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="button-group">
+
+                    <button
+                        type="submit"
+                        class="save-button">
+
+                        💾 Save Expense
+
+                    </button>
+
+
+                    <a
+                        href="{{ url_for('expense_management') }}"
+                        class="cancel-button">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Automatically set today's date
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const dateField =
+                document.getElementById("expense_date");
+
+            if (dateField) {
+
+                const today =
+                    new Date().toISOString().split("T")[0];
+
+                dateField.value = today;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+

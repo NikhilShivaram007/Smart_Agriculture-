@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Product | Smart Agriculture</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7f5;
+        color: #222;
+    }
+
+    .header {
+        background: #176b35;
+        color: white;
+        padding: 18px 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .logo span {
+        color: #d8f3dc;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .header-buttons a {
+        text-decoration: none;
+        color: white;
+        background: rgba(255,255,255,0.15);
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .header-buttons a:hover {
+        background: rgba(255,255,255,0.25);
+    }
+
+    .container {
+        width: 95%;
+        max-width: 850px;
+        margin: 35px auto;
+    }
+
+    .title-box {
+        margin-bottom: 25px;
+    }
+
+    .title-box h1 {
+        color: #176b35;
+        font-size: 30px;
+        margin-bottom: 7px;
+    }
+
+    .title-box p {
+        color: #666;
+    }
+
+    .form-card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.10);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #176b35;
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .current-image {
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .current-image img {
+        width: 180px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .no-image {
+        width: 180px;
+        height: 130px;
+        background: #f1f8f3;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 55px;
+    }
+
+    .help-text {
+        color: #777;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .update-btn,
+    .cancel-btn {
+        flex: 1;
+        padding: 13px;
+        border: none;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .update-btn {
+        background: #176b35;
+        color: white;
+    }
+
+    .update-btn:hover {
+        background: #0e5428;
+    }
+
+    .cancel-btn {
+        background: #e9ecef;
+        color: #333;
+    }
+
+    .cancel-btn:hover {
+        background: #d6d9dc;
+    }
+
+    .message {
+        padding: 13px 18px;
+        border-radius: 7px;
+        margin-bottom: 20px;
+        background: #e8f5e9;
+        color: #176b35;
+        border: 1px solid #b7dfc1;
+    }
+
+    footer {
+        margin-top: 45px;
+        background: #176b35;
+        color: white;
+        text-align: center;
+        padding: 18px;
+        font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+
+        .header {
+            padding: 15px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .header-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .form-card {
+            padding: 20px;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+```
+<div class="logo">
+    🌱 Smart <span>Agriculture</span>
+</div>
+
+<div class="header-buttons">
+
+    <a href="{{ url_for('my_products') }}">
+        📦 My Products
+    </a>
+
+    <a href="{{ url_for('farm_marketplace') }}">
+        🛒 Marketplace
+    </a>
+
+    <a href="{{ url_for('dashboard') }}">
+        🏠 Dashboard
+    </a>
+
+</div>
+```
+
+</div>
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+```
+<div class="title-box">
+
+    <h1>
+        ✏️ Edit Product
+    </h1>
+
+    <p>
+        Update the details of your marketplace product.
+    </p>
+
+</div>
+
+
+<!-- ================= FLASH MESSAGES ================= -->
+
+{% with messages = get_flashed_messages() %}
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="message">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+
+<!-- ================= FORM ================= -->
+
+<div class="form-card">
+
+    <form
+        method="POST"
+        action="{{ url_for('edit_product', product_id=product['id']) }}"
+        enctype="multipart/form-data"
+    >
+
+        <!-- PRODUCT NAME -->
+
+        <div class="form-group">
+
+            <label for="product_name">
+                Product Name
+            </label>
+
+            <input
+                type="text"
+                id="product_name"
+                name="product_name"
+                value="{{ product['product_name'] or '' }}"
+                placeholder="Enter product name"
+                required
+            >
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="form-group">
+
+            <label for="category">
+                Category
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                required
+            >
+
+                <option value="Fruits"
+                    {% if product['category'] == 'Fruits' %}selected{% endif %}>
+                    Fruits
+                </option>
+
+                <option value="Vegetables"
+                    {% if product['category'] == 'Vegetables' %}selected{% endif %}>
+                    Vegetables
+                </option>
+
+                <option value="Grains"
+                    {% if product['category'] == 'Grains' %}selected{% endif %}>
+                    Grains
+                </option>
+
+                <option value="Pulses"
+                    {% if product['category'] == 'Pulses' %}selected{% endif %}>
+                    Pulses
+                </option>
+
+                <option value="Spices"
+                    {% if product['category'] == 'Spices' %}selected{% endif %}>
+                    Spices
+                </option>
+
+                <option value="Dairy"
+                    {% if product['category'] == 'Dairy' %}selected{% endif %}>
+                    Dairy
+                </option>
+
+                <option value="Other Farm Products"
+                    {% if product['category'] == 'Other Farm Products' %}selected{% endif %}>
+                    Other Farm Products
+                </option>
+
+                <option value="Farm Equipment"
+                    {% if product['category'] == 'Farm Equipment' %}selected{% endif %}>
+                    Farm Equipment
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- PRICE -->
+
+        <div class="form-group">
+
+            <label for="price">
+                Price
+            </label>
+
+            <input
+                type="number"
+                id="price"
+                name="price"
+                value="{{ product['price'] or '' }}"
+                placeholder="Enter price"
+                min="0"
+                step="0.01"
+                required
+            >
+
+        </div>
+
+
+        <!-- QUANTITY -->
+
+        <div class="form-group">
+
+            <label for="quantity">
+                Available Quantity
+            </label>
+
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value="{{ product['quantity'] or '' }}"
+                placeholder="Enter available quantity"
+                min="0"
+                step="0.01"
+                required
+            >
+
+        </div>
+
+
+        <!-- UNIT -->
+
+        <div class="form-group">
+
+            <label for="unit">
+                Unit
+            </label>
+
+            <select
+                id="unit"
+                name="unit"
+                required
+            >
+
+                <option value="kg"
+                    {% if product['unit'] == 'kg' %}selected{% endif %}>
+                    Kilogram (kg)
+                </option>
+
+                <option value="quintal"
+                    {% if product['unit'] == 'quintal' %}selected{% endif %}>
+                    Quintal
+                </option>
+
+                <option value="ton"
+                    {% if product['unit'] == 'ton' %}selected{% endif %}>
+                    Ton
+                </option>
+
+                <option value="litre"
+                    {% if product['unit'] == 'litre' %}selected{% endif %}>
+                    Litre
+                </option>
+
+                <option value="piece"
+                    {% if product['unit'] == 'piece' %}selected{% endif %}>
+                    Piece
+                </option>
+
+                <option value="packet"
+                    {% if product['unit'] == 'packet' %}selected{% endif %}>
+                    Packet
+                </option>
+
+                <option value="box"
+                    {% if product['unit'] == 'box' %}selected{% endif %}>
+                    Box
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="form-group">
+
+            <label for="location">
+                Location
+            </label>
+
+            <input
+                type="text"
+                id="location"
+                name="location"
+                value="{{ product['location'] or '' }}"
+                placeholder="Enter farm/location"
+            >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+                Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Enter product description"
+            >{{ product['description'] or '' }}</textarea>
+
+        </div>
+
+
+        <!-- CURRENT IMAGE -->
+
+        <div class="form-group">
+
+            <label>
+                Current Product Image
+            </label>
+
+            {% if product['image'] %}
+
+                <div class="current-image">
+
+                    {% if product['image'].startswith('http') %}
+
+                        <img
+                            src="{{ product['image'] }}"
+                            alt="{{ product['product_name'] }}"
+                        >
+
+                    {% else %}
+
+                        <img
+                            src="{{ url_for('static', filename='marketplace/' + product['image']) }}"
+                            alt="{{ product['product_name'] }}"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+
+                        <div
+                            class="no-image"
+                            style="display:none;"
+                        >
+                            🌱
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% else %}
+
+                <div class="current-image">
+
+                    <div class="no-image">
+                        🌱
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- NEW IMAGE -->
+
+        <div class="form-group">
+
+            <label for="image">
+                Change Product Image
+            </label>
+
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+            >
+
+            <div class="help-text">
+                Leave this empty if you want to keep the current image.
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <a
+                href="{{ url_for('my_products') }}"
+                class="cancel-btn"
+            >
+                ← Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="update-btn"
+            >
+                💾 Update Product
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+```
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+```
+🌱 Smart Agriculture Management & Decision Support System
+```
+
+</footer>
+
+</body>
+
+</html>

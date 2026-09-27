@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Farm Profit & Loss</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{margin:0;font-family:Arial;background:#f4f8f4;color:#333}
+.header{background:#176b35;color:white;padding:20px 30px}
+.header h1{margin:0}
+.container{max-width:1200px;margin:25px auto;padding:0 15px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card,.box{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 8px #ddd;margin-bottom:20px}
+.card h3,.box h2{margin-top:0;color:#176b35}
+.amount{font-size:26px;font-weight:bold}
+.income{color:#16803c}.expense{color:#d32f2f}.profit{color:#176b35}.loss{color:#d32f2f}
+.filter{display:flex;gap:10px;flex-wrap:wrap}
+input,button{padding:10px;border:1px solid #ccc;border-radius:5px}
+button{background:#176b35;color:white;border:0;cursor:pointer}
+.download{display:inline-block;background:#176b35;color:white;padding:10px 15px;border-radius:5px;text-decoration:none}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
+th{background:#eaf5ec;color:#176b35}
+.table-box{overflow-x:auto}
+.empty{text-align:center;padding:20px;color:#777}
+.back{display:inline-block;background:#176b35;color:white;text-decoration:none;padding:10px 15px;border-radius:5px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}.filter{display:block}.filter input,.filter button{margin:4px 0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🌾 Farm Profit & Loss</h1>
+<p>Track farm income, expenses and profit.</p>
+</div>
+
+<div class="container">
+
+<div class="box">
+<h2>📅 Date Filter</h2>
+<form class="filter" method="GET" action="{{ url_for('farm_profit_loss') }}">
+<input type="date" name="start_date" value="{{ start_date }}">
+<input type="date" name="end_date" value="{{ end_date }}">
+<button type="submit">🔍 Filter</button>
+<a class="download" href="{{ url_for('download_farm_profit_loss',start_date=start_date,end_date=end_date) }}">⬇ Download CSV</a>
+</form>
+</div>
+
+<div class="cards">
+<div class="card">
+<h3>💰 Total Income</h3>
+<div class="amount income">₹{{ total_income }}</div>
+</div>
+
+<div class="card">
+<h3>💸 Total Expenses</h3>
+<div class="amount expense">₹{{ total_expenses }}</div>
+</div>
+
+<div class="card">
+<h3>📊 Net Profit / Loss</h3>
+{% if profit_loss >= 0 %}
+<div class="amount profit">₹{{ profit_loss }}</div>
+<p class="profit">Profit</p>
+{% else %}
+<div class="amount loss">₹{{ profit_loss }}</div>
+<p class="loss">Loss</p>
+{% endif %}
+</div>
+</div>
+
+<div class="box">
+<h2>📈 Monthly Income vs Expense</h2>
+<canvas id="profitChart"></canvas>
+</div>
+
+<div class="box table-box">
+<h2>🌱 Crop-wise Profit</h2>
+{% if crop_report %}
+<table>
+<tr>
+<th>Crop</th>
+<th>Income</th>
+<th>Expense</th>
+<th>Profit / Loss</th>
+</tr>
+{% for item in crop_report %}
+<tr>
+<td>{{ item.crop }}</td>
+<td class="income">₹{{ item.income|round(2) }}</td>
+<td class="expense">₹{{ item.expense|round(2) }}</td>
+<td class="{% if item.profit >= 0 %}profit{% else %}loss{% endif %}">
+₹{{ item.profit|round(2) }}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<div class="empty">No crop records available.</div>
+{% endif %}
+</div>
+
+<div class="box table-box">
+<h2>📅 Monthly Report</h2>
+{% if monthly_report %}
+<table>
+<tr>
+<th>Month</th>
+<th>Income</th>
+<th>Expense</th>
+<th>Profit / Loss</th>
+</tr>
+{% for item in monthly_report %}
+<tr>
+<td>{{ item.month }}</td>
+<td class="income">₹{{ item.income|round(2) }}</td>
+<td class="expense">₹{{ item.expense|round(2) }}</td>
+<td class="{% if item.profit >= 0 %}profit{% else %}loss{% endif %}">
+₹{{ item.profit|round(2) }}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<div class="empty">No monthly records available.</div>
+{% endif %}
+</div>
+
+<div class="box table-box">
+<h2>🛒 Sales Details</h2>
+{% if sales %}
+<table>
+<tr>
+<th>Date</th>
+<th>Product</th>
+<th>Quantity</th>
+<th>Income</th>
+</tr>
+{% for item in sales %}
+<tr>
+<td>{{ item.sale_date }}</td>
+<td>{{ item.crop }}</td>
+<td>{{ item.quantity }} {{ item.unit }}</td>
+<td class="income">₹{{ item.income|round(2) }}</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<div class="empty">No sales available.</div>
+{% endif %}
+</div>
+
+<div class="box table-box">
+<h2>💸 Expense Details</h2>
+{% if expense_rows %}
+<table>
+<tr>
+<th>Date</th>
+<th>Category</th>
+<th>Crop</th>
+<th>Amount</th>
+<th>Payment</th>
+</tr>
+{% for item in expense_rows %}
+<tr>
+<td>{{ item.expense_date }}</td>
+<td>{{ item.category }}</td>
+<td>{{ item.crop or 'Farm' }}</td>
+<td class="expense">₹{{ item.amount|round(2) }}</td>
+<td>{{ item.payment_method or '-' }}</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<div class="empty">No expenses available.</div>
+{% endif %}
+</div>
+
+<div class="box table-box">
+<h2>📊 Daily Profit & Loss</h2>
+{% if report %}
+<table>
+<tr>
+<th>Date</th>
+<th>Crop</th>
+<th>Income</th>
+<th>Expense</th>
+<th>Profit / Loss</th>
+</tr>
+{% for item in report %}
+<tr>
+<td>{{ item.date }}</td>
+<td>{{ item.crop }}</td>
+<td class="income">₹{{ item.income|round(2) }}</td>
+<td class="expense">₹{{ item.expense|round(2) }}</td>
+<td class="{% if item.profit >= 0 %}profit{% else %}loss{% endif %}">
+₹{{ item.profit|round(2) }}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<div class="empty">No profit and loss records available.</div>
+{% endif %}
+</div>
+
+<a href="{{ url_for('dashboard') }}" class="back">← Back to Dashboard</a>
+
+</div>
+
+<script>
+const labels={{ chart_labels|safe }};
+const income={{ chart_income|safe }};
+const expenses={{ chart_expenses|safe }};
+const profit={{ chart_profit|safe }};
+
+new Chart(document.getElementById("profitChart"),{
+type:"bar",
+data:{
+labels:labels,
+datasets:[
+{label:"Income",data:income},
+{label:"Expenses",data:expenses},
+{label:"Profit",data:profit}
+]
+},
+options:{
+responsive:true,
+plugins:{legend:{display:true}},
+scales:{y:{beginAtZero:true}}
+}
+});
+</script>
+
+</body>
+</html>

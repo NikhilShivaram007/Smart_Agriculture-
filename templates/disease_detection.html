@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Detection | Smart Agriculture</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(10, 55, 25, 0.72),
+                    rgba(10, 55, 25, 0.72)
+                ),
+                url("https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: #333;
+        }
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+
+            height: 75px;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 45px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.12);
+        }
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .logo-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            background: #198754;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        .logo-text h2 {
+
+            color: #176b35;
+
+            font-size: 20px;
+        }
+
+        .logo-text p {
+
+            color: #718074;
+
+            font-size: 11px;
+
+            margin-top: 2px;
+        }
+
+        .back-button {
+
+            text-decoration: none;
+
+            background: #198754;
+
+            color: white;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+
+            background: #146c43;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================================
+           MAIN
+        ================================= */
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1200px;
+
+            margin: 35px auto 50px;
+        }
+
+
+        /* ================================
+           HERO
+        ================================= */
+
+        .hero {
+
+            background:
+                rgba(255,255,255,0.96);
+
+            border-radius: 20px;
+
+            padding: 35px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15);
+
+            margin-bottom: 25px;
+        }
+
+        .hero-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+
+            color: #176b35;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+
+            color: #718074;
+
+            font-size: 14px;
+
+            max-width: 700px;
+
+            margin: auto;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================================
+           UPLOAD SECTION
+        ================================= */
+
+        .upload-section {
+
+            background:
+                rgba(255,255,255,0.97);
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15);
+
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+
+            color: #176b35;
+
+            font-size: 20px;
+
+            margin-bottom: 7px;
+        }
+
+        .section-description {
+
+            color: #718074;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+        }
+
+        .upload-box {
+
+            border:
+                2px dashed #9bc9a6;
+
+            background: #f4fbf5;
+
+            border-radius: 16px;
+
+            padding: 40px 20px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .upload-box:hover {
+
+            background: #edf8ef;
+
+            border-color: #198754;
+        }
+
+        .upload-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 12px;
+        }
+
+        .upload-box h3 {
+
+            color: #245c36;
+
+            font-size: 18px;
+
+            margin-bottom: 7px;
+        }
+
+        .upload-box p {
+
+            color: #7a887d;
+
+            font-size: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .choose-button {
+
+            display: inline-block;
+
+            background: #198754;
+
+            color: white;
+
+            padding: 11px 22px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        #leafImage {
+
+            display: none;
+        }
+
+
+        /* ================================
+           PREVIEW
+        ================================= */
+
+        .preview-container {
+
+            display: none;
+
+            margin-top: 25px;
+
+            text-align: center;
+        }
+
+        .preview-container h3 {
+
+            color: #176b35;
+
+            margin-bottom: 12px;
+
+            font-size: 16px;
+        }
+
+        #imagePreview {
+
+            width: 280px;
+
+            height: 220px;
+
+            object-fit: cover;
+
+            border-radius: 14px;
+
+            border: 3px solid #dcebdd;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .detect-button {
+
+            display: block;
+
+            margin: 20px auto 0;
+
+            border: none;
+
+            background: #176b35;
+
+            color: white;
+
+            padding: 13px 28px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .detect-button:hover {
+
+            background: #0f5127;
+
+            transform: translateY(-2px);
+        }
+
+        .detect-button:disabled {
+
+            background: #78947f;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* ================================
+           RESULT
+        ================================= */
+
+        .result-section {
+
+            background:
+                rgba(255,255,255,0.97);
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15);
+
+            margin-bottom: 25px;
+        }
+
+        .result-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .result-card {
+
+            background: #f7fbf7;
+
+            border:
+                1px solid #dcebdd;
+
+            border-radius: 14px;
+
+            padding: 20px;
+        }
+
+        .result-card span {
+
+            display: block;
+
+            color: #718074;
+
+            font-size: 11px;
+
+            margin-bottom: 6px;
+        }
+
+        .result-card strong {
+
+            color: #176b35;
+
+            font-size: 18px;
+
+            line-height: 1.5;
+        }
+
+        .confidence-bar {
+
+            height: 10px;
+
+            background: #e5eee7;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            margin-top: 10px;
+        }
+
+        .confidence-progress {
+
+            width: 0%;
+
+            height: 100%;
+
+            background: #198754;
+
+            border-radius: 10px;
+
+            transition:
+                width 0.8s ease;
+        }
+
+
+        /* ================================
+           INFO
+        ================================= */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .info-card {
+
+            background:
+                rgba(255,255,255,0.97);
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.13);
+        }
+
+        .info-icon {
+
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+        .info-card h3 {
+
+            color: #176b35;
+
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+        .info-card p {
+
+            color: #718074;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        footer {
+
+            text-align: center;
+
+            color: white;
+
+            font-size: 12px;
+
+            padding: 20px;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+            .container {
+
+                width: 94%;
+            }
+
+            .result-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .navbar {
+
+                height: auto;
+
+                padding: 15px;
+
+                gap: 10px;
+            }
+
+            .logo-text h2 {
+
+                font-size: 16px;
+            }
+
+            .hero h1 {
+
+                font-size: 24px;
+            }
+
+            .hero {
+
+                padding: 25px 18px;
+            }
+
+            .upload-section,
+            .result-section {
+
+                padding: 20px;
+            }
+
+            #imagePreview {
+
+                width: 100%;
+
+                max-width: 280px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌾
+        </div>
+
+        <div class="logo-text">
+
+            <h2>SMART FARM</h2>
+
+            <p>
+                Agriculture Management System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="/dashboard"
+        class="back-button"
+    >
+
+        ← Dashboard
+
+    </a>
+
+</nav>
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<div class="container">
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section class="hero">
+
+        <div class="hero-icon">
+            🦠🌿
+        </div>
+
+        <h1>
+            Plant Disease Detection
+        </h1>
+
+        <p>
+
+            Upload a clear image of a crop leaf
+            to identify possible plant diseases
+            using the Smart Agriculture
+            disease detection system.
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================
+         UPLOAD
+    ====================================== -->
+
+    <section class="upload-section">
+
+        <h2 class="section-title">
+
+            📷 Upload Leaf Image
+
+        </h2>
+
+
+        <p class="section-description">
+
+            Select a clear JPG, JPEG or PNG
+            image of the crop leaf.
+
+        </p>
+
+
+        <label
+            for="leafImage"
+            class="upload-box"
+        >
+
+            <div class="upload-icon">
+                🌿
+            </div>
+
+
+            <h3>
+                Upload Crop Leaf
+            </h3>
+
+
+            <p>
+
+                JPG, JPEG or PNG images
+                are supported.
+
+            </p>
+
+
+            <span class="choose-button">
+
+                Choose Image
+
+            </span>
+
+        </label>
+
+
+        <input
+            type="file"
+            id="leafImage"
+            accept="image/jpeg,image/jpg,image/png"
+        >
+
+
+        <!-- =================================
+             PREVIEW
+        ================================== -->
+
+        <div
+            class="preview-container"
+            id="previewContainer"
+        >
+
+            <h3>
+                🖼️ Selected Image
+            </h3>
+
+
+            <img
+                id="imagePreview"
+                alt="Selected leaf image"
+            >
+
+
+            <button
+                type="button"
+                class="detect-button"
+                id="detectButton"
+            >
+
+                🔍 Detect Disease
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         RESULT
+    ====================================== -->
+
+    <section class="result-section">
+
+        <h2 class="section-title">
+
+            🔬 Detection Result
+
+        </h2>
+
+
+        <p class="section-description">
+
+            The disease prediction will appear
+            here after image analysis.
+
+        </p>
+
+
+        <div class="result-grid">
+
+
+            <!-- DISEASE -->
+
+            <div class="result-card">
+
+                <span>
+                    Detected Disease
+                </span>
+
+
+                <strong id="diseaseName">
+
+                    No detection yet
+
+                </strong>
+
+            </div>
+
+
+            <!-- CONFIDENCE -->
+
+            <div class="result-card">
+
+                <span>
+                    Confidence
+                </span>
+
+
+                <strong id="confidence">
+
+                    --
+
+                </strong>
+
+
+                <div class="confidence-bar">
+
+                    <div
+                        class="confidence-progress"
+                        id="confidenceProgress"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYMPTOMS -->
+
+            <div class="result-card">
+
+                <span>
+                    Symptoms
+                </span>
+
+
+                <strong id="symptoms">
+
+                    Upload an image
+
+                </strong>
+
+            </div>
+
+
+            <!-- TREATMENT -->
+
+            <div class="result-card">
+
+                <span>
+                    Recommended Treatment
+                </span>
+
+
+                <strong id="treatment">
+
+                    Upload an image
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         INFORMATION
+    ====================================== -->
+
+    <div class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                📸
+            </div>
+
+
+            <h3>
+                Take a Clear Image
+            </h3>
+
+
+            <p>
+
+                Use a clear and well-lit
+                photograph of the affected
+                crop leaf.
+
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🌱
+            </div>
+
+
+            <h3>
+                Early Detection
+            </h3>
+
+
+            <p>
+
+                Early identification can help
+                farmers take timely action and
+                protect their crops.
+
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                🛡️
+            </div>
+
+
+            <h3>
+                Prevention
+            </h3>
+
+
+            <p>
+
+                Proper irrigation, field hygiene
+                and regular monitoring can help
+                reduce disease risk.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    🌱 SMART FARMING • HEALTHY CROPS • BETTER FUTURE 🌱
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const leafImage =
+    document.getElementById(
+        "leafImage"
+    );
+
+
+const previewContainer =
+    document.getElementById(
+        "previewContainer"
+    );
+
+
+const imagePreview =
+    document.getElementById(
+        "imagePreview"
+    );
+
+
+const detectButton =
+    document.getElementById(
+        "detectButton"
+    );
+
+
+const diseaseName =
+    document.getElementById(
+        "diseaseName"
+    );
+
+
+const confidence =
+    document.getElementById(
+        "confidence"
+    );
+
+
+const confidenceProgress =
+    document.getElementById(
+        "confidenceProgress"
+    );
+
+
+const symptoms =
+    document.getElementById(
+        "symptoms"
+    );
+
+
+const treatment =
+    document.getElementById(
+        "treatment"
+    );
+
+
+/* =========================================
+   IMAGE SELECTION
+========================================= */
+
+leafImage.addEventListener(
+    "change",
+    function () {
+
+        const file =
+            this.files[0];
+
+
+        if (!file) {
+
+            previewContainer.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        /* Check file type */
+
+        const validTypes = [
+
+            "image/jpeg",
+
+            "image/jpg",
+
+            "image/png"
+
+        ];
+
+
+        if (
+            !validTypes.includes(
+                file.type
+            )
+        ) {
+
+            alert(
+                "Please select a JPG, JPEG or PNG image."
+            );
+
+            this.value = "";
+
+            previewContainer.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        /* Check file size */
+
+        if (
+            file.size >
+            10 * 1024 * 1024
+        ) {
+
+            alert(
+                "Image size must be less than 10 MB."
+            );
+
+            this.value = "";
+
+            previewContainer.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        /* Preview */
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function (event) {
+
+                imagePreview.src =
+                    event.target.result;
+
+                previewContainer.style.display =
+                    "block";
+
+            };
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+
+        /* Reset old result */
+
+        diseaseName.innerText =
+            "No detection yet";
+
+
+        confidence.innerText =
+            "--";
+
+
+        confidenceProgress.style.width =
+            "0%";
+
+
+        symptoms.innerText =
+            "Upload an image";
+
+
+        treatment.innerText =
+            "Upload an image";
+
+    }
+);
+
+
+/* =========================================
+   DISEASE DETECTION
+========================================= */
+
+detectButton.addEventListener(
+    "click",
+    async function () {
+
+        if (!leafImage.files.length) {
+
+            alert(
+                "Please choose a leaf image first."
+            );
+
+            return;
+
+        }
+
+
+        const file =
+            leafImage.files[0];
+
+
+        /* Loading state */
+
+        detectButton.disabled =
+            true;
+
+
+        detectButton.innerText =
+            "⏳ Detecting...";
+
+
+        diseaseName.innerText =
+            "Analyzing image...";
+
+
+        confidence.innerText =
+            "--";
+
+
+        confidenceProgress.style.width =
+            "0%";
+
+
+        symptoms.innerText =
+            "Analyzing image...";
+
+
+        treatment.innerText =
+            "Analyzing image...";
+
+
+        /* Create form data */
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "image",
+            file
+        );
+
+
+        try {
+
+            /*
+
+                Send the image to Flask.
+
+                Required Flask route:
+
+                POST /predict-disease
+
+            */
+
+            const response =
+                await fetch(
+                    "/predict-disease",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            /* Check response */
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error ||
+                    "Disease detection failed."
+                );
+
+            }
+
+
+            /* =================================
+               SHOW MODEL RESULT
+            ================================= */
+
+            diseaseName.innerText =
+                data.disease ||
+                "Unknown";
+
+
+            confidence.innerText =
+                data.confidence !== undefined
+                    ? data.confidence + "%"
+                    : "--";
+
+
+            const progressValue =
+                Number(
+                    data.confidence || 0
+                );
+
+
+            confidenceProgress.style.width =
+                Math.min(
+                    Math.max(
+                        progressValue,
+                        0
+                    ),
+                    100
+                ) + "%";
+
+
+            symptoms.innerText =
+                data.symptoms ||
+                "No symptom information available.";
+
+
+            treatment.innerText =
+                data.treatment ||
+                "No treatment information available.";
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Disease detection error:",
+                error
+            );
+
+
+            diseaseName.innerText =
+                "Detection Error";
+
+
+            confidence.innerText =
+                "--";
+
+
+            confidenceProgress.style.width =
+                "0%";
+
+
+            symptoms.innerText =
+                "Unable to analyze the image.";
+
+
+            treatment.innerText =
+                error.message ||
+                "Please try again.";
+
+
+            alert(
+                error.message ||
+                "Disease detection failed."
+            );
+
+        }
+
+
+        /* Restore button */
+
+        detectButton.disabled =
+            false;
+
+
+        detectButton.innerText =
+            "🔍 Detect Disease";
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
+

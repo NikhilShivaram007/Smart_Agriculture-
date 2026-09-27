@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Smart Agriculture</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f8f4;
+            color: #333;
+        }
+
+        header {
+            background: #176b35;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #176b35;
+            margin-bottom: 25px;
+        }
+
+        .checkout-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .checkout-box h3 {
+            color: #176b35;
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #176b35;
+        }
+
+        .location-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .location-option {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .location-option:hover {
+            border-color: #176b35;
+        }
+
+        .location-option.selected {
+            border-color: #176b35;
+            background: #eef8f1;
+        }
+
+        .location-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .option-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: #176b35;
+        }
+
+        .option-description {
+            font-size: 13px;
+            color: #666;
+            margin-top: 7px;
+            line-height: 1.5;
+        }
+
+        .address-section,
+        .gps-section {
+            margin-top: 20px;
+        }
+
+        .gps-section {
+            display: none;
+            background: #f5faf6;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #cfe5d5;
+        }
+
+        .gps-status {
+            padding: 12px;
+            border-radius: 7px;
+            background: #fff;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .coordinates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .coordinates input {
+            background: #eee;
+        }
+
+        .detect-btn {
+            background: #176b35;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .detect-btn:hover {
+            background: #0f5228;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            color: #176b35;
+            margin-top: 15px;
+        }
+
+        .checkout-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .back-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .pay-btn {
+            background: #176b35;
+            color: white;
+        }
+
+        .pay-btn:hover {
+            background: #0f5228;
+        }
+
+        .error-message {
+            background: #ffecec;
+            color: #b00020;
+            border: 1px solid #ffb8b8;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .required {
+            color: red;
+        }
+
+        .note {
+            background: #fff8df;
+            border: 1px solid #eadb8a;
+            padding: 12px;
+            border-radius: 7px;
+            margin-top: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #176b35;
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            nav {
+                margin-top: 10px;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .location-options {
+                grid-template-columns: 1fr;
+            }
+
+            .coordinates {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🌱 Smart Agriculture</h2>
+
+    <nav>
+        <a href="{{ url_for('farm_marketplace') }}">Marketplace</a>
+        <a href="{{ url_for('marketplace_cart') }}">Cart</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    </nav>
+</header>
+
+
+<div class="container">
+
+    <h1 class="page-title">🛒 Checkout</h1>
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <form method="POST"
+          action="{{ url_for('marketplace_checkout') }}"
+          id="checkoutForm">
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="checkout-box">
+
+            <h3>👤 Customer Details</h3>
+
+            <label for="delivery_name">
+                Full Name <span class="required">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="delivery_name"
+                name="delivery_name"
+                placeholder="Enter your full name"
+                value="{{ request.form.get('delivery_name', '') }}"
+                required
+            >
+
+
+            <label for="delivery_phone">
+                Phone Number <span class="required">*</span>
+            </label>
+
+            <input
+                type="tel"
+                id="delivery_phone"
+                name="delivery_phone"
+                placeholder="Enter your phone number"
+                value="{{ request.form.get('delivery_phone', '') }}"
+                required
+            >
+
+        </div>
+
+
+        <!-- DELIVERY LOCATION -->
+
+        <div class="checkout-box">
+
+            <h3>📍 Delivery Location</h3>
+
+            <p>
+                Choose how you want to provide your delivery location.
+            </p>
+
+
+            <div class="location-options">
+
+                <!-- ADDRESS OPTION -->
+
+                <label class="location-option" id="addressOption">
+
+                    <input
+                        type="radio"
+                        name="location_method"
+                        value="address"
+                        onchange="selectLocationMethod('address')"
+                        {% if request.form.get('location_method', 'address') == 'address' %}
+                        checked
+                        {% endif %}
+                    >
+
+                    <span class="option-title">
+                        🏠 Enter Delivery Address
+                    </span>
+
+                    <div class="option-description">
+                        Enter your complete delivery address manually.
+                    </div>
+
+                </label>
+
+
+                <!-- GPS OPTION -->
+
+                <label class="location-option" id="gpsOption">
+
+                    <input
+                        type="radio"
+                        name="location_method"
+                        value="gps"
+                        onchange="selectLocationMethod('gps')"
+                        {% if request.form.get('location_method') == 'gps' %}
+                        checked
+                        {% endif %}
+                    >
+
+                    <span class="option-title">
+                        📍 Use Current Location
+                    </span>
+
+                    <div class="option-description">
+                        Automatically detect your current GPS location.
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="address-section" id="addressSection">
+
+                <label for="delivery_address">
+                    Delivery Address <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="delivery_address"
+                    name="delivery_address"
+                    placeholder="House/Building, Street, Area, City, State, PIN Code"
+                >{{ request.form.get('delivery_address', '') }}</textarea>
+
+            </div>
+
+
+            <!-- GPS -->
+
+            <div class="gps-section" id="gpsSection">
+
+                <div class="gps-status" id="gpsStatus">
+                    📍 Select "Use Current Location" to detect your location.
+                </div>
+
+
+                <button
+                    type="button"
+                    class="detect-btn"
+                    onclick="getCurrentLocation()"
+                >
+                    📍 Detect Current Location Again
+                </button>
+
+
+                <div class="coordinates">
+
+                    <div>
+                        <label for="latitude">
+                            Latitude
+                        </label>
+
+                        <input
+                            type="text"
+                            id="latitude"
+                            name="latitude"
+                            value="{{ request.form.get('latitude', '') }}"
+                            readonly
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="longitude">
+                            Longitude
+                        </label>
+
+                        <input
+                            type="text"
+                            id="longitude"
+                            name="longitude"
+                            value="{{ request.form.get('longitude', '') }}"
+                            readonly
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="note">
+                    🔒 Your browser will ask permission to access your current
+                    location. Please click <b>Allow</b> to continue.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="checkout-box">
+
+            <h3>🛍️ Order Summary</h3>
+
+            {% for item_id, item in cart.items() %}
+
+                <div class="summary-item">
+
+                    <div>
+                        <strong>
+                            {{ item.product_name }}
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            {{ item.quantity }} × ₹{{ "%.2f"|format(item.price) }}
+                        </small>
+
+                    </div>
+
+                    <div>
+                        ₹{{ "%.2f"|format(item.price * item.quantity) }}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+            <div class="total">
+
+                <span>Total Amount</span>
+
+                <span>
+                    ₹{{ "%.2f"|format(total) }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="checkout-actions">
+
+            <a
+                href="{{ url_for('marketplace_cart') }}"
+                class="btn back-btn"
+            >
+                ← Back to Cart
+            </a>
+
+
+            <button
+                type="submit"
+                class="btn pay-btn"
+                id="continueButton"
+            >
+                Continue to Payment →
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<footer>
+    Smart Agriculture Management & Decision Support System
+</footer>
+
+
+<script>
+
+    const addressOption = document.getElementById("addressOption");
+    const gpsOption = document.getElementById("gpsOption");
+
+    const addressSection = document.getElementById("addressSection");
+    const gpsSection = document.getElementById("gpsSection");
+
+    const deliveryAddress = document.getElementById("delivery_address");
+
+    const latitude = document.getElementById("latitude");
+    const longitude = document.getElementById("longitude");
+
+    const gpsStatus = document.getElementById("gpsStatus");
+
+
+    /*
+       Change location method
+    */
+
+    function selectLocationMethod(method) {
+
+        if (method === "address") {
+
+            addressSection.style.display = "block";
+            gpsSection.style.display = "none";
+
+            addressOption.classList.add("selected");
+            gpsOption.classList.remove("selected");
+
+            /*
+               Address is required
+            */
+
+            deliveryAddress.required = true;
+
+        }
+
+
+        else if (method === "gps") {
+
+            addressSection.style.display = "none";
+            gpsSection.style.display = "block";
+
+            addressOption.classList.remove("selected");
+            gpsOption.classList.add("selected");
+
+            /*
+               Address is NOT required
+            */
+
+            deliveryAddress.required = false;
+
+            /*
+               Automatically detect location
+            */
+
+            if (
+                latitude.value === "" ||
+                longitude.value === ""
+            ) {
+
+                getCurrentLocation();
+
+            }
+
+        }
+
+    }
+
+
+    /*
+       Detect current GPS location
+    */
+
+    function getCurrentLocation() {
+
+        gpsStatus.innerHTML =
+            "⏳ Detecting your current location...";
+
+        gpsStatus.style.color = "#176b35";
+
+
+        if (!navigator.geolocation) {
+
+            gpsStatus.innerHTML =
+                "❌ Geolocation is not supported by your browser.";
+
+            gpsStatus.style.color = "red";
+
+            return;
+        }
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+
+                latitude.value = lat.toFixed(6);
+                longitude.value = lon.toFixed(6);
+
+
+                gpsStatus.innerHTML =
+                    "✅ Current location detected successfully.";
+
+                gpsStatus.style.color = "#176b35";
+
+            },
+
+
+            function(error) {
+
+                let message =
+                    "❌ Unable to detect your location.";
+
+
+                if (error.code === 1) {
+
+                    message =
+                        "❌ Location permission was denied. Please allow location access.";
+
+                }
+
+                else if (error.code === 2) {
+
+                    message =
+                        "❌ Your location could not be determined. Please try again.";
+
+                }
+
+                else if (error.code === 3) {
+
+                    message =
+                        "❌ Location detection timed out. Please try again.";
+
+                }
+
+
+                gpsStatus.innerHTML = message;
+
+                gpsStatus.style.color = "red";
+
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+
+        );
+
+    }
+
+
+    /*
+       Validate before checkout
+    */
+
+    document.getElementById("checkoutForm").addEventListener(
+        "submit",
+        function(event) {
+
+            const selectedMethod =
+                document.querySelector(
+                    'input[name="location_method"]:checked'
+                );
+
+
+            if (!selectedMethod) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please select a delivery location option."
+                );
+
+                return;
+            }
+
+
+            /*
+               ADDRESS METHOD
+            */
+
+            if (selectedMethod.value === "address") {
+
+                if (
+                    deliveryAddress.value.trim() === ""
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please enter your delivery address."
+                    );
+
+                    deliveryAddress.focus();
+
+                    return;
+                }
+
+            }
+
+
+            /*
+               GPS METHOD
+            */
+
+            if (selectedMethod.value === "gps") {
+
+                if (
+                    latitude.value === "" ||
+                    longitude.value === ""
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please allow location access and detect your current location before continuing."
+                    );
+
+                    getCurrentLocation();
+
+                    return;
+                }
+
+            }
+
+
+            /*
+               Prevent double click
+            */
+
+            const button =
+                document.getElementById("continueButton");
+
+            button.disabled = true;
+
+            button.innerHTML =
+                "Processing...";
+
+        }
+    );
+
+
+    /*
+       Load selected option when page opens
+    */
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            const selected =
+                document.querySelector(
+                    'input[name="location_method"]:checked'
+                );
+
+
+            if (selected) {
+
+                selectLocationMethod(
+                    selected.value
+                );
+
+            }
+            else {
+
+                selectLocationMethod("address");
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
+

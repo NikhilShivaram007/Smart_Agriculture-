@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farm Shop | Smart Agriculture</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="shop-page">
+
+    <!-- HEADER -->
+    <header class="shop-header">
+
+        <div class="shop-logo">
+            <span>🌾</span>
+
+            <div>
+                <h1>SMART FARM</h1>
+                <p>Farm Products Marketplace</p>
+            </div>
+        </div>
+
+        <div class="shop-actions">
+
+            <a href="/dashboard" class="home-button">
+                🏠 Home
+            </a>
+
+            <a href="#" class="cart-button">
+                🛒 Cart
+                <span class="cart-count">0</span>
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="shop-main">
+
+        <!-- SHOP INTRO -->
+        <section class="shop-intro">
+
+            <div>
+                <h2>🛍️ Farm Online Shop</h2>
+
+                <p>
+                    Buy fresh fruits, vegetables, grains and other
+                    farm products directly from farmers.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH -->
+        <section class="shop-search">
+
+            <input
+                type="text"
+                placeholder="🔍 Search fruits, vegetables, grains..."
+            >
+
+            <button>
+                Search
+            </button>
+
+        </section>
+
+
+        <!-- CATEGORIES -->
+        <section class="shop-categories">
+
+            <h2>Shop by Category</h2>
+
+            <div class="category-list">
+
+                <button class="category active">
+                    🌾 All Products
+                </button>
+
+                <button class="category">
+                    🍎 Fruits
+                </button>
+
+                <button class="category">
+                    🥕 Vegetables
+                </button>
+
+                <button class="category">
+                    🌾 Grains
+                </button>
+
+                <button class="category">
+                    🫘 Pulses
+                </button>
+
+                <button class="category">
+                    🌶️ Spices
+                </button>
+
+                <button class="category">
+                    🥛 Dairy
+                </button>
+
+                <button class="category">
+                    🌱 Other Farm Products
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTS -->
+        <section class="products-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>🌱 Fresh Farm Products</h2>
+
+                    <p>
+                        Products available from farmers
+                    </p>
+                </div>
+
+                <span class="product-count">
+                    8 Products
+                </span>
+
+            </div>
+
+
+            <div class="products-grid">
+
+
+                <!-- PRODUCT 1 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🌾
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Grains
+                        </span>
+
+                        <h3>Ragi</h3>
+
+                        <p>
+                            Fresh quality Ragi directly from the farmer.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 500 kg
+                            </span>
+
+                            <strong>
+                                ₹45/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 2 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🍅
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Vegetables
+                        </span>
+
+                        <h3>Tomato</h3>
+
+                        <p>
+                            Fresh farm tomatoes with good quality.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 200 kg
+                            </span>
+
+                            <strong>
+                                ₹35/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 3 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🍌
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Fruits
+                        </span>
+
+                        <h3>Banana</h3>
+
+                        <p>
+                            Fresh farm-grown bananas.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 300 kg
+                            </span>
+
+                            <strong>
+                                ₹40/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 4 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🍚
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Grains
+                        </span>
+
+                        <h3>Rice</h3>
+
+                        <p>
+                            Quality rice supplied directly by farmers.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 1000 kg
+                            </span>
+
+                            <strong>
+                                ₹52/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 5 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🥕
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Vegetables
+                        </span>
+
+                        <h3>Carrot</h3>
+
+                        <p>
+                            Fresh and healthy farm carrots.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 150 kg
+                            </span>
+
+                            <strong>
+                                ₹50/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 6 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🌽
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Grains
+                        </span>
+
+                        <h3>Maize</h3>
+
+                        <p>
+                            Fresh maize harvested from the farm.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 700 kg
+                            </span>
+
+                            <strong>
+                                ₹28/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 7 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🌶️
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Spices
+                        </span>
+
+                        <h3>Red Chilli</h3>
+
+                        <p>
+                            Quality farm-grown red chilli.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 100 kg
+                            </span>
+
+                            <strong>
+                                ₹120/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 8 -->
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🥭
+                    </div>
+
+                    <div class="product-content">
+
+                        <span class="product-category">
+                            Fruits
+                        </span>
+
+                        <h3>Mango</h3>
+
+                        <p>
+                            Fresh seasonal mangoes from the farm.
+                        </p>
+
+                        <div class="product-info">
+
+                            <span>
+                                ⚖️ 250 kg
+                            </span>
+
+                            <strong>
+                                ₹80/kg
+                            </strong>
+
+                        </div>
+
+                        <div class="farmer-name">
+                            👨‍🌾 Farmer
+                        </div>
+
+                        <button class="add-cart">
+                            🛒 Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="shop-footer">
+
+        🌱 SMART FARM • FRESH FROM FARMERS • BETTER FUTURE 🌱
+
+    </footer>
+
+
+</body>
+</html>

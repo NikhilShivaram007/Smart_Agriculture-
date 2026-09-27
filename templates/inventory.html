@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Farm Inventory | Smart Agriculture</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .inventory-page {
+            padding: 30px;
+        }
+
+        .inventory-header {
+            margin-bottom: 25px;
+        }
+
+        .inventory-header h1 {
+            color: #176b35;
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .inventory-header p {
+            color: #718074;
+            font-size: 14px;
+        }
+
+        .inventory-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .inventory-card {
+            background: white;
+            border: 1px solid #dcebdd;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 7px 20px rgba(30, 90, 45, 0.08);
+        }
+
+        .inventory-card span {
+            font-size: 30px;
+        }
+
+        .inventory-card h3 {
+            color: #245c36;
+            margin: 10px 0 5px;
+            font-size: 15px;
+        }
+
+        .inventory-card strong {
+            color: #176b35;
+            font-size: 25px;
+        }
+
+        .inventory-table-box {
+            background: white;
+            border: 1px solid #dcebdd;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 7px 20px rgba(30, 90, 45, 0.08);
+        }
+
+        .inventory-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .inventory-table-header h2 {
+            color: #176b35;
+            font-size: 21px;
+        }
+
+        .add-item-button {
+            background: #198754;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-item-button:hover {
+            background: #146c43;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .inventory-table th {
+            background: #176b35;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .inventory-table td {
+            padding: 14px;
+            border-bottom: 1px solid #edf3ee;
+            color: #53665a;
+            font-size: 13px;
+        }
+
+        .inventory-item {
+            font-weight: bold;
+            color: #245c36;
+        }
+
+        .stock-good {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .stock-low {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .inventory-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #176b35;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1000px) {
+
+            .inventory-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .inventory-page {
+                padding: 20px;
+            }
+
+            .inventory-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .inventory-table-box {
+                overflow-x: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="farmer-dashboard">
+
+
+    <main class="farmer-main">
+
+
+        <div class="inventory-page">
+
+
+            <a href="/dashboard"
+               class="inventory-back">
+
+                ← Back to Home
+
+            </a>
+
+
+            <div class="inventory-header">
+
+                <h1>
+                    📦 Farm Inventory Management
+                </h1>
+
+                <p>
+                    Manage seeds, fertilizers, crops,
+                    equipment and other farm stock.
+                </p>
+
+            </div>
+
+
+
+            <!-- INVENTORY SUMMARY -->
+
+            <section class="inventory-cards">
+
+
+                <div class="inventory-card">
+
+                    <span>🌱</span>
+
+                    <h3>
+                        Seeds
+                    </h3>
+
+                    <strong>
+                        250 kg
+                    </strong>
+
+                </div>
+
+
+                <div class="inventory-card">
+
+                    <span>💊</span>
+
+                    <h3>
+                        Fertilizers
+                    </h3>
+
+                    <strong>
+                        120 kg
+                    </strong>
+
+                </div>
+
+
+                <div class="inventory-card">
+
+                    <span>🌾</span>
+
+                    <h3>
+                        Farm Products
+                    </h3>
+
+                    <strong>
+                        850 kg
+                    </strong>
+
+                </div>
+
+
+                <div class="inventory-card">
+
+                    <span>🚜</span>
+
+                    <h3>
+                        Equipment
+                    </h3>
+
+                    <strong>
+                        8 Items
+                    </strong>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- INVENTORY TABLE -->
+
+            <section class="inventory-table-box">
+
+
+                <div class="inventory-table-header">
+
+                    <h2>
+                        📋 Current Inventory
+                    </h2>
+
+                    <button class="add-item-button">
+
+                        + Add Item
+
+                    </button>
+
+                </div>
+
+
+                <table class="inventory-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Item
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Quantity
+                            </th>
+
+                            <th>
+                                Unit
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td class="inventory-item">
+                                🌱 Ragi Seeds
+                            </td>
+
+                            <td>
+                                Seeds
+                            </td>
+
+                            <td>
+                                100
+                            </td>
+
+                            <td>
+                                kg
+                            </td>
+
+                            <td class="stock-good">
+                                Good Stock
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="inventory-item">
+                                🌱 Rice Seeds
+                            </td>
+
+                            <td>
+                                Seeds
+                            </td>
+
+                            <td>
+                                80
+                            </td>
+
+                            <td>
+                                kg
+                            </td>
+
+                            <td class="stock-good">
+                                Good Stock
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="inventory-item">
+                                💊 Organic Fertilizer
+                            </td>
+
+                            <td>
+                                Fertilizer
+                            </td>
+
+                            <td>
+                                50
+                            </td>
+
+                            <td>
+                                kg
+                            </td>
+
+                            <td class="stock-good">
+                                Good Stock
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="inventory-item">
+                                💊 Urea
+                            </td>
+
+                            <td>
+                                Fertilizer
+                            </td>
+
+                            <td>
+                                20
+                            </td>
+
+                            <td>
+                                kg
+                            </td>
+
+                            <td class="stock-low">
+                                Low Stock
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="inventory-item">
+                                🌾 Ragi
+                            </td>
+
+                            <td>
+                                Farm Product
+                            </td>
+
+                            <td>
+                                500
+                            </td>
+
+                            <td>
+                                kg
+                            </td>
+
+                            <td class="stock-good">
+                                Available
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="inventory-item">
+                                🚜 Tractor
+                            </td>
+
+                            <td>
+                                Equipment
+                            </td>
+
+                            <td>
+                                1
+                            </td>
+
+                            <td>
+                                Unit
+                            </td>
+
+                            <td class="stock-good">
+                                Available
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>
+

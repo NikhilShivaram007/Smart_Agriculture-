@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AgriGuide | Smart Agriculture</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f8f3;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #176b35;
+            color: white;
+            padding: 16px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: white;
+            background: #0d5127;
+            padding: 10px 18px;
+            border-radius: 6px;
+        }
+
+        .home-btn:hover {
+            background: #083d1d;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .title {
+            text-align: center;
+            color: #176b35;
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        /* ================= GUIDE CARDS ================= */
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(230px, 1fr)
+            );
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .guide-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+
+        .guide-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .guide-card h3 {
+            color: #176b35;
+            margin-bottom: 8px;
+        }
+
+        .guide-card p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* ================= INFORMATION BOX ================= */
+
+        .info-box {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+            margin-bottom: 25px;
+        }
+
+        .info-box h2 {
+            color: #176b35;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            line-height: 1.7;
+            color: #444;
+        }
+
+        .info-box ul {
+            margin-top: 12px;
+            padding-left: 25px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        /* ================= CHAT ================= */
+
+        .chat-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #176b35;
+            color: white;
+            padding: 18px 22px;
+        }
+
+        .chat-header h3 {
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            font-size: 14px;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fbf9;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .message-box {
+            max-width: 75%;
+            padding: 13px 17px;
+            border-radius: 12px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .bot-message .message-box {
+            background: #e1f2e6;
+            color: #173d25;
+            border-bottom-left-radius: 3px;
+        }
+
+        .user-message .message-box {
+            background: #176b35;
+            color: white;
+            border-bottom-right-radius: 3px;
+        }
+
+        /* ================= QUICK QUESTIONS ================= */
+
+        .quick-section {
+            padding: 15px 20px 5px;
+            background: white;
+        }
+
+        .quick-section h4 {
+            color: #176b35;
+            margin-bottom: 10px;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            border: 1px solid #176b35;
+            background: white;
+            color: #176b35;
+            padding: 8px 13px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .quick-btn:hover {
+            background: #176b35;
+            color: white;
+        }
+
+        /* ================= INPUT ================= */
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            padding: 18px 20px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 13px 15px;
+            border: 1px solid #bbb;
+            border-radius: 25px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        #userInput:focus {
+            border-color: #176b35;
+        }
+
+        .send-btn {
+            background: #176b35;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .send-btn:hover {
+            background: #0d5127;
+        }
+
+        /* ================= DAILY TIP ================= */
+
+        .daily-tip {
+            margin-top: 25px;
+            background: white;
+            padding: 20px;
+            border-left: 5px solid #176b35;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .daily-tip h3 {
+            color: #176b35;
+            margin-bottom: 8px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 600px) {
+
+            .navbar {
+                padding: 14px;
+            }
+
+            .navbar h2 {
+                font-size: 19px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .title {
+                font-size: 26px;
+            }
+
+            .chat-messages {
+                height: 400px;
+            }
+
+            .message-box {
+                max-width: 90%;
+            }
+
+            .chat-input-area {
+                padding: 12px;
+            }
+
+            .send-btn {
+                padding: 10px 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <h2>🌱 AgriGuide</h2>
+
+    <a href="{{ url_for('dashboard') }}"
+       class="home-btn">
+
+        🏠 Dashboard
+
+    </a>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <h1 class="title">
+
+        🌾 AgriGuide – Your Farming Assistant
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Get simple guidance about crops, irrigation,
+        fertilizers, pests, diseases, weather and farming.
+
+    </p>
+
+
+    <!-- ================= GUIDE CARDS ================= -->
+
+    <div class="guide-grid">
+
+
+        <div class="guide-card"
+             onclick="askQuestion('How should I manage irrigation?')">
+
+            <div class="guide-icon">
+                💧
+            </div>
+
+            <h3>Irrigation</h3>
+
+            <p>
+                Learn about proper watering,
+                soil moisture and irrigation methods.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('Which fertilizer should I use?')">
+
+            <div class="guide-icon">
+                🧪
+            </div>
+
+            <h3>Fertilizer</h3>
+
+            <p>
+                Get guidance about nutrients,
+                NPK and fertilizer application.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('How can I control pests?')">
+
+            <div class="guide-icon">
+                🐛
+            </div>
+
+            <h3>Pest Control</h3>
+
+            <p>
+                Learn how to identify and manage
+                common agricultural pests.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('How can I identify plant diseases?')">
+
+            <div class="guide-icon">
+                🍃
+            </div>
+
+            <h3>Plant Disease</h3>
+
+            <p>
+                Learn about disease symptoms,
+                prevention and crop protection.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('How does crop recommendation work?')">
+
+            <div class="guide-icon">
+                🌾
+            </div>
+
+            <h3>Crop Recommendation</h3>
+
+            <p>
+                Understand how soil and weather
+                conditions affect crop selection.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('Give me weather farming advice')">
+
+            <div class="guide-icon">
+                🌦️
+            </div>
+
+            <h3>Weather</h3>
+
+            <p>
+                Get farming advice based on
+                temperature, rainfall and humidity.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('How can I manage farm expenses?')">
+
+            <div class="guide-icon">
+                💰
+            </div>
+
+            <h3>Farm Expenses</h3>
+
+            <p>
+                Learn how to track farming
+                expenses and manage costs.
+            </p>
+
+        </div>
+
+
+        <div class="guide-card"
+             onclick="askQuestion('How can I manage farm inventory?')">
+
+            <div class="guide-icon">
+                📦
+            </div>
+
+            <h3>Farm Inventory</h3>
+
+            <p>
+                Keep track of seeds, fertilizers,
+                equipment and other farm materials.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= INFORMATION ================= -->
+
+    <div class="info-box">
+
+        <h2>
+            🌱 Smart Farming Guide
+        </h2>
+
+        <p>
+            AgriGuide helps farmers understand
+            important farming activities and make
+            better day-to-day decisions.
+        </p>
+
+        <ul>
+
+            <li>🌾 Select suitable crops according to conditions.</li>
+
+            <li>💧 Maintain proper irrigation and soil moisture.</li>
+
+            <li>🧪 Apply fertilizers according to crop requirements.</li>
+
+            <li>🐛 Monitor crops regularly for pests.</li>
+
+            <li>🍃 Check plants for disease symptoms.</li>
+
+            <li>🌦️ Check weather before important farm activities.</li>
+
+            <li>💰 Track expenses and farm income.</li>
+
+            <li>📦 Maintain proper farm inventory.</li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- ================= CHAT ================= -->
+
+    <div class="chat-container">
+
+
+        <div class="chat-header">
+
+            <h3>
+                🤖 AgriGuide Assistant
+            </h3>
+
+            <p>
+                Ask me an agriculture-related question.
+            </p>
+
+        </div>
+
+
+        <div class="chat-messages"
+             id="chatMessages">
+
+
+            <div class="message bot-message">
+
+                <div class="message-box">
+
+                    👋 Hello Farmer!
+
+                    I am AgriGuide.
+
+                    I can help you with:
+
+                    🌾 Crop information
+                    💧 Irrigation
+                    🧪 Fertilizer
+                    🐛 Pest control
+                    🍃 Plant diseases
+                    🌦️ Weather
+                    💰 Farm expenses
+                    📦 Farm inventory
+                    📚 Agriculture learning
+
+                    What would you like to know?
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK QUESTIONS -->
+
+        <div class="quick-section">
+
+            <h4>
+                Quick Questions
+            </h4>
+
+
+            <div class="quick-buttons">
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('How often should I irrigate my crop?')">
+
+                    💧 Irrigation
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('Which fertilizer is good for crops?')">
+
+                    🧪 Fertilizer
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('How can I control pests in my crop?')">
+
+                    🐛 Pest Control
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('How can I detect plant disease?')">
+
+                    🍃 Plant Disease
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('Tell me about crop recommendation')">
+
+                    🌾 Crop Recommendation
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('Give me weather farming advice')">
+
+                    🌦️ Weather
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('How can I manage farm expenses?')">
+
+                    💰 Expenses
+
+                </button>
+
+
+                <button class="quick-btn"
+                        onclick="askQuestion('How can I manage farm inventory?')">
+
+                    📦 Inventory
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- INPUT -->
+
+        <div class="chat-input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Ask AgriGuide your question..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send-btn"
+                onclick="sendMessage()">
+
+                Send
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- DAILY TIP -->
+
+    <div class="daily-tip">
+
+        <h3>
+            🌱 Today's Agriculture Tip
+        </h3>
+
+        <p id="dailyTip"></p>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* ============================================================
+   ADD MESSAGE
+   ============================================================ */
+
+function addMessage(message, sender) {
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+    const messageDiv =
+        document.createElement("div");
+
+    messageDiv.className =
+        "message " +
+        (sender === "user"
+            ? "user-message"
+            : "bot-message");
+
+
+    const messageBox =
+        document.createElement("div");
+
+    messageBox.className =
+        "message-box";
+
+
+    messageBox.textContent =
+        message;
+
+
+    messageDiv.appendChild(
+        messageBox
+    );
+
+
+    chatMessages.appendChild(
+        messageDiv
+    );
+
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+}
+
+
+/* ============================================================
+   SEND MESSAGE
+   ============================================================ */
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("userInput");
+
+    const message =
+        input.value.trim();
+
+
+    if (message === "") {
+
+        return;
+
+    }
+
+
+    addMessage(
+        message,
+        "user"
+    );
+
+
+    input.value = "";
+
+
+    setTimeout(function() {
+
+        const response =
+            getGuideResponse(message);
+
+
+        addMessage(
+            response,
+            "bot"
+        );
+
+    }, 400);
+
+}
+
+
+/* ============================================================
+   QUICK QUESTION
+   ============================================================ */
+
+function askQuestion(question) {
+
+    const input =
+        document.getElementById("userInput");
+
+    input.value =
+        question;
+
+    sendMessage();
+
+}
+
+
+/* ============================================================
+   ENTER KEY
+   ============================================================ */
+
+document
+.getElementById("userInput")
+.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   AGRIGUIDE RESPONSE
+   ============================================================ */
+
+function getGuideResponse(message) {
+
+    const text =
+        message.toLowerCase();
+
+
+    /* GREETING */
+
+    if (
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
+    ) {
+
+        return "👋 Hello Farmer! How can I help you with agriculture today?";
+
+    }
+
+
+    /* IRRIGATION */
+
+    if (
+        text.includes("irrigation") ||
+        text.includes("water") ||
+        text.includes("watering")
+    ) {
+
+        return `💧 Irrigation Guidance:
+
+• Check soil moisture before watering.
+• Avoid over-irrigation.
+• Water according to crop growth stage.
+• Drip irrigation can reduce water wastage.
+• Avoid irrigation when heavy rain is expected.
+
+🌱 Always consider crop type, soil type and weather conditions.`;
+
+    }
+
+
+    /* FERTILIZER */
+
+    if (
+        text.includes("fertilizer") ||
+        text.includes("fertiliser") ||
+        text.includes("npk")
+    ) {
+
+        return `🧪 Fertilizer Guidance:
+
+• Use fertilizer according to crop requirements.
+• Soil testing helps identify nutrient needs.
+• Nitrogen supports leaf and vegetative growth.
+• Phosphorus supports root and flowering development.
+• Potassium supports plant strength and crop quality.
+
+⚠️ Avoid excessive fertilizer application.`;
+
+    }
+
+
+    /* PEST */
+
+    if (
+        text.includes("pest") ||
+        text.includes("insect") ||
+        text.includes("worm")
+    ) {
+
+        return `🐛 Pest Control Guidance:
+
+• Inspect leaves and stems regularly.
+• Remove heavily affected plant parts.
+• Keep the field clean.
+• Monitor crops regularly.
+• Use pest-control products according to recommended instructions.
+
+🔎 Early detection can reduce crop damage.`;
+
+    }
+
+
+    /* DISEASE */
+
+    if (
+        text.includes("disease") ||
+        text.includes("leaf") ||
+        text.includes("plant disease")
+    ) {
+
+        return `🍃 Plant Disease Guidance:
+
+• Check leaves for spots and discoloration.
+• Look for wilting or unusual growth.
+• Avoid excessive watering.
+• Maintain field sanitation.
+• Monitor crops regularly.
+
+📷 You can also use the Plant Disease Detection module.`;
+
+    }
+
+
+    /* CROP RECOMMENDATION */
+
+    if (
+        text.includes("crop") ||
+        text.includes("recommend")
+    ) {
+
+        return `🌾 Crop Recommendation:
+
+Crop selection can depend on:
+
+• Soil type
+• Soil pH
+• Temperature
+• Humidity
+• Rainfall
+• Nitrogen
+• Phosphorus
+• Potassium
+
+👉 Use the Crop Recommendation module for a recommendation based on your farm conditions.`;
+
+    }
+
+
+    /* WEATHER */
+
+    if (
+        text.includes("weather") ||
+        text.includes("rain") ||
+        text.includes("temperature")
+    ) {
+
+        return `🌦️ Weather Farming Guidance:
+
+• Heavy rain → check drainage.
+• High temperature → monitor soil moisture.
+• Strong wind → protect young plants.
+• High humidity → watch for fungal diseases.
+• Check weather before irrigation and fertilizer application.
+
+👉 Open Weather Advisory for current weather information.`;
+
+    }
+
+
+    /* EXPENSE */
+
+    if (
+        text.includes("expense") ||
+        text.includes("expenses") ||
+        text.includes("cost")
+    ) {
+
+        return `💰 Farm Expense Guidance:
+
+Track important farm expenses such as:
+
+• Seeds
+• Fertilizers
+• Pesticides
+• Labour
+• Irrigation
+• Equipment
+• Transportation
+
+📊 Keeping expense records helps understand total farming costs.`;
+
+    }
+
+
+    /* INVENTORY */
+
+    if (
+        text.includes("inventory") ||
+        text.includes("stock") ||
+        text.includes("seed")
+    ) {
+
+        return `📦 Farm Inventory Guidance:
+
+Keep records of:
+
+• Seeds
+• Fertilizers
+• Pesticides
+• Farm equipment
+• Animal feed
+• Other farm materials
+
+📋 Regular inventory updates help avoid shortages and unnecessary purchases.`;
+
+    }
+
+
+    /* MARKET */
+
+    if (
+        text.includes("market") ||
+        text.includes("price") ||
+        text.includes("sell")
+    ) {
+
+        return `💰 Farm Market Guidance:
+
+Before selling farm products:
+
+• Check current market prices.
+• Compare different markets.
+• Check product quality.
+• Consider transportation costs.
+• Choose an appropriate selling time.
+
+👉 Use the Farm Marketplace module to manage farm products.`;
+
+    }
+
+
+    /* FACT */
+
+    if (
+        text.includes("fact") ||
+        text.includes("interesting") ||
+        text.includes("learn")
+    ) {
+
+        return `📚 Agriculture Fact:
+
+Drip irrigation delivers water close to plant roots.
+
+This can help reduce water wastage and maintain suitable soil moisture.
+
+🌱 Efficient water management is an important part of smart farming.`;
+
+    }
+
+
+    /* FARMING */
+
+    if (
+        text.includes("farming") ||
+        text.includes("farmer")
+    ) {
+
+        return `🌱 Smart Farming Tips:
+
+• Monitor soil moisture.
+• Track crop growth.
+• Check weather conditions.
+• Monitor pests and diseases.
+• Use fertilizers carefully.
+• Maintain farm records.
+• Check market prices before selling.
+• Track farm expenses and inventory.
+
+🤖 Smart Agriculture technology can support better farm management.`;
+
+    }
+
+
+    /* THANK YOU */
+
+    if (
+        text.includes("thank")
+    ) {
+
+        return "😊 You're welcome, Farmer! AgriGuide is ready to help you.";
+
+    }
+
+
+    /* HELP */
+
+    if (
+        text.includes("help")
+    ) {
+
+        return `🤖 AgriGuide can help you with:
+
+🌾 Crop Recommendation
+💧 Irrigation
+🧪 Fertilizer
+🐛 Pest Control
+🍃 Plant Diseases
+🌦️ Weather
+💰 Farm Expenses
+📦 Farm Inventory
+🛒 Farm Marketplace
+📚 Agriculture Facts
+
+Ask me any agriculture-related question.`;
+
+    }
+
+
+    /* DEFAULT */
+
+    return `🤖 I can provide guidance on many agriculture topics.
+
+Try asking about:
+
+🌾 Crop recommendation
+💧 Irrigation
+🧪 Fertilizer
+🐛 Pest control
+🍃 Plant diseases
+🌦️ Weather
+💰 Farm expenses
+📦 Farm inventory
+🛒 Farm marketplace
+📚 Agriculture facts
+
+Please ask your question in simple words.`;
+
+}
+
+
+/* ============================================================
+   DAILY AGRICULTURE TIPS
+   ============================================================ */
+
+const dailyTips = [
+
+    "Check soil moisture before irrigation to avoid unnecessary water usage.",
+
+    "Regularly inspect crop leaves to detect pests and diseases early.",
+
+    "Soil testing helps farmers apply the correct amount of nutrients.",
+
+    "Drip irrigation can help deliver water directly to plant roots.",
+
+    "Check weather forecasts before important farm activities.",
+
+    "Crop rotation can help improve soil health.",
+
+    "Keep records of planting dates, fertilizer use and crop production.",
+
+    "Healthy soil is an important foundation of good crop production.",
+
+    "Use fertilizers according to crop requirements.",
+
+    "Check market prices before selling farm products.",
+
+    "Maintain farm inventory to avoid shortages.",
+
+    "Track farm expenses regularly to understand farming costs."
+
+];
+
+
+const today =
+    new Date().getDate();
+
+
+const tip =
+    dailyTips[
+        today % dailyTips.length
+    ];
+
+
+document.getElementById(
+    "dailyTip"
+).textContent = tip;
+
+
+</script>
+
+
+</body>
+
+</html>

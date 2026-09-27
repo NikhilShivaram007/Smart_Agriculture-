@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Edit Farmer Profile | Smart Agriculture</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f9f5;
+        color: #333;
+    }
+
+    .topbar {
+        background: #176b35;
+        color: white;
+        padding: 18px 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .topbar h2 {
+        font-size: 22px;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: white;
+        background: #198754;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .back-btn:hover {
+        background: #146c43;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 35px auto;
+    }
+
+    .page-title {
+        margin-bottom: 25px;
+    }
+
+    .page-title h1 {
+        color: #176b35;
+        font-size: 28px;
+        margin-bottom: 7px;
+    }
+
+    .page-title p {
+        color: #718074;
+        font-size: 14px;
+    }
+
+    .profile-card {
+        background: white;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(30, 90, 45, 0.10);
+        border: 1px solid #dcebdd;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #245c36;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #cfe0d2;
+        border-radius: 9px;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .form-group input:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.10);
+    }
+
+    .button-section {
+        margin-top: 30px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .save-btn {
+        border: none;
+        background: #198754;
+        color: white;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .save-btn:hover {
+        background: #146c43;
+    }
+
+    .cancel-btn {
+        text-decoration: none;
+        background: #6c757d;
+        color: white;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .cancel-btn:hover {
+        background: #5c636a;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 35px;
+        color: #718074;
+        font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+
+        .topbar {
+            padding: 15px 20px;
+        }
+
+        .topbar h2 {
+            font-size: 18px;
+        }
+
+        .container {
+            width: 94%;
+        }
+
+        .profile-card {
+            padding: 22px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<div class="topbar">
+
+    <h2>🌾 SMART FARM</h2>
+
+    <a href="{{ url_for('profile') }}" class="back-btn">
+        ← Farmer Profile
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="page-title">
+
+        <h1>✏️ Edit Farmer Profile</h1>
+
+        <p>
+            Update your farmer account information.
+        </p>
+
+    </div>
+
+
+    <div class="profile-card">
+
+        <form method="POST" action="{{ url_for('update_profile') }}">
+
+            <div class="form-group">
+
+                <label>👤 Full Name</label>
+
+                <input
+                    type="text"
+                    name="full_name"
+                    value="{{ farmer['full_name'] }}"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>🔑 Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    value="{{ farmer['username'] }}"
+                    placeholder="Enter username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>📧 Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ farmer['email'] }}"
+                    placeholder="Enter email address"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>📱 Phone Number</label>
+
+                <input
+                    type="text"
+                    name="phone_number"
+                    value="{{ farmer['phone_number'] }}"
+                    placeholder="Enter phone number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>🚗 Vehicle Number</label>
+
+                <input
+                    type="text"
+                    name="vehicle_number"
+                    value="{{ farmer['vehicle_number'] }}"
+                    placeholder="Enter vehicle number"
+                >
+
+            </div>
+
+
+            <div class="button-section">
+
+                <button type="submit" class="save-btn">
+                    💾 Save Changes
+                </button>
+
+                <a href="{{ url_for('profile') }}" class="cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="footer">
+
+        🌱 SMART FARMING • BETTER FUTURE 🌱
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

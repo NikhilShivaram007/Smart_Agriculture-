@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | Smart Agriculture</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Arial,Helvetica,sans-serif;background:#f4f7f4;color:#222}
+        .header{background:linear-gradient(135deg,#176b35,#0d5428);color:#fff;padding:18px 35px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 12px rgba(0,0,0,.15)}
+        .logo{font-size:24px;font-weight:bold}.logo span{color:#d8f3dc}
+        .links{display:flex;gap:10px;flex-wrap:wrap}.links a{color:#fff;text-decoration:none;background:rgba(255,255,255,.14);padding:9px 15px;border-radius:7px;font-size:14px}
+        .container{width:94%;max-width:900px;margin:40px auto}
+        .success-card{background:#fff;border-radius:18px;padding:35px;box-shadow:0 5px 22px rgba(0,0,0,.09);text-align:center}
+        .success-icon{width:90px;height:90px;border-radius:50%;margin:0 auto 20px;background:#eaf8ed;border:3px solid #39a852;display:flex;align-items:center;justify-content:center;font-size:48px;color:#198c36}
+        h1{color:#176b35;font-size:32px;margin-bottom:8px}.subtitle{color:#666;margin-bottom:28px}
+        .details{display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:left;margin-bottom:25px}
+        .detail{background:#f8faf8;border:1px solid #e0e7e1;border-radius:10px;padding:15px}.detail span{display:block;color:#777;font-size:12px;margin-bottom:5px}.detail strong{color:#176b35;font-size:15px;word-break:break-word}
+        .items{text-align:left;border:1px solid #e0e7e1;border-radius:12px;overflow:hidden;margin-bottom:25px}.items h2{font-size:19px;color:#176b35;padding:16px;border-bottom:1px solid #e0e7e1}
+        .item{display:flex;justify-content:space-between;gap:15px;padding:14px 16px;border-bottom:1px solid #eee}.item:last-child{border-bottom:none}.item-name{font-weight:bold}.item-qty{font-size:12px;color:#777;margin-top:4px}.item-price{font-weight:bold;color:#176b35;white-space:nowrap}
+        .total{display:flex;justify-content:space-between;padding:18px 16px;background:#f3faf4;font-size:22px;font-weight:bold;color:#176b35}
+        .buttons{display:flex;gap:12px;justify-content:center}.btn{display:inline-block;text-decoration:none;border-radius:8px;padding:13px 20px;font-weight:bold}.primary{background:#176b35;color:#fff}.secondary{background:#eef2ee;color:#176b35}
+        .note{margin-top:20px;color:#777;font-size:13px;line-height:1.6}
+        footer{margin-top:45px;background:#176b35;color:#fff;text-align:center;padding:18px;font-size:14px}
+        @media(max-width:650px){.header{flex-direction:column;gap:12px;padding:15px}.container{margin:25px auto}.success-card{padding:22px}.details{grid-template-columns:1fr}.buttons{flex-direction:column}.btn{text-align:center}}
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">🌱 Smart <span>Agriculture</span></div>
+    <div class="links">
+        <a href="{{ url_for('farm_marketplace') }}">🛒 Marketplace</a>
+        <a href="{{ url_for('marketplace_orders') }}">📦 My Orders</a>
+        <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h1>Payment Successful!</h1>
+        <p class="subtitle">Your order has been successfully placed.</p>
+
+        <div class="details">
+            <div class="detail"><span>Order ID</span><strong>#{{ order['id'] }}</strong></div>
+            <div class="detail"><span>Payment Method</span><strong>{{ order['payment_method'] }}</strong></div>
+            <div class="detail"><span>Payment Status</span><strong>{{ order['payment_status'] }}</strong></div>
+            <div class="detail"><span>Order Status</span><strong>{{ order['status'] }}</strong></div>
+            <div class="detail"><span>Delivery Name</span><strong>{{ order['delivery_name'] }}</strong></div>
+            <div class="detail"><span>Phone</span><strong>{{ order['delivery_phone'] }}</strong></div>
+            <div class="detail" style="grid-column:1/-1"><span>Delivery Address</span><strong>{{ order['delivery_address'] }}</strong></div>
+            <div class="detail"><span>Payment Reference</span><strong>{{ order['payment_reference'] }}</strong></div>
+            <div class="detail"><span>Order Date</span><strong>{{ order['order_date'] }}</strong></div>
+        </div>
+
+        <div class="items">
+            <h2>🧾 Ordered Products</h2>
+            {% for item in items %}
+            <div class="item">
+                <div>
+                    <div class="item-name">{{ item['product_name'] }}</div>
+                    <div class="item-qty">Quantity: {{ item['quantity'] }} {{ item['unit'] or 'kg' }}</div>
+                </div>
+                <div class="item-price">₹{{ "%.2f"|format(item['subtotal']|float) }}</div>
+            </div>
+            {% endfor %}
+            <div class="total">
+                <span>Total Amount</span>
+                <span>₹{{ "%.2f"|format(order['total_amount']|float) }}</span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="{{ url_for('marketplace_orders') }}" class="btn primary">📦 View My Orders</a>
+            <a href="{{ url_for('farm_marketplace') }}" class="btn secondary">🛍️ Continue Shopping</a>
+        </div>
+
+        <p class="note">Thank you for using the Smart Agriculture Marketplace.</p>
+    </div>
+</div>
+
+<footer>🌱 Smart Agriculture Management & Decision Support System</footer>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Registration | Smart Agriculture</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="register-page">
+
+
+    <!-- =========================================
+         REGISTRATION CONTAINER
+    ========================================== -->
+
+    <div class="register-container">
+
+
+        <!-- =====================================
+             LEFT SIDE - AGRICULTURE
+        ====================================== -->
+
+        <div class="agriculture-section">
+
+            <div class="agriculture-overlay">
+
+
+                <!-- BRAND -->
+
+                <div class="brand">
+
+                    <h1>
+                        🌾 SMART AGRICULTURE
+                    </h1>
+
+                    <p>
+                        Management & Farmer Assistance System
+                    </p>
+
+                </div>
+
+
+                <!-- FARM MESSAGE -->
+
+                <div class="farm-message">
+
+                    <h2>
+                        👨‍🌾 Welcome, Farmer!
+                    </h2>
+
+                    <p>
+                        Grow smarter. Farm better.
+                    </p>
+
+                    <p>
+                        Use modern technology to make better
+                        farming decisions and improve your harvest.
+                    </p>
+
+                </div>
+
+
+                <!-- FARM ELEMENTS -->
+
+                <div class="farm-elements">
+
+
+                    <div class="farm-element">
+
+                        <span>
+                            👨‍🌾
+                        </span>
+
+                        <p>
+                            Farmer
+                        </p>
+
+                    </div>
+
+
+                    <div class="farm-element">
+
+                        <span>
+                            🐄
+                        </span>
+
+                        <p>
+                            Livestock
+                        </p>
+
+                    </div>
+
+
+                    <div class="farm-element">
+
+                        <span>
+                            🌾
+                        </span>
+
+                        <p>
+                            Farm Land
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- SMART FARMING TEXT -->
+
+                <div class="smart-farming-text">
+
+                    🌱 SMART FARMING • BETTER FUTURE 🌱
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             RIGHT SIDE - REGISTRATION FORM
+        ====================================== -->
+
+        <div class="register-form-section">
+
+
+            <div class="register-card">
+
+
+                <!-- FORM HEADER -->
+
+                <div class="form-header">
+
+                    <div class="farmer-icon">
+                        👨‍🌾
+                    </div>
+
+                    <h2>
+                        Farmer Registration
+                    </h2>
+
+                    <p>
+                        Create your account and start smart farming
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================
+                     REGISTRATION FORM
+                ================================== -->
+
+                <form
+                    method="POST"
+                    action="/register"
+                >
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label for="full_name">
+                            👤 Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- USERNAME -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            🧑 Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Choose a username"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            📧 Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            📱 Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            🔒 Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirm_password">
+                            🔐 Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- TERMS -->
+
+                    <div class="terms">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                required
+                            >
+
+                            I agree to the terms and conditions
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- REGISTER BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="register-button"
+                    >
+
+                        🌱 CREATE FARMER ACCOUNT
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- =================================
+                     LOGIN LINK
+                ================================== -->
+
+                <div class="login-link">
+
+                    <p>
+
+                        Already have an account?
+
+                        <a href="/login">
+                            Login here
+                        </a>
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- BOTTOM TEXT -->
+
+                <div class="bottom-text">
+
+                    🌾 Farmer • Cow • Land • Technology 🌾
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+</body>
+
+</html>

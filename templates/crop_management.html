@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crop Management | Smart Agriculture</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #173b25;
+            min-height: 100vh;
+
+            /* AGRICULTURE BACKGROUND */
+            background:
+                linear-gradient(
+                    rgba(8, 54, 27, 0.72),
+                    rgba(19, 91, 47, 0.65)
+                ),
+                url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            width: 100%;
+            padding: 18px 6%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255,255,255,0.96);
+
+            box-shadow:
+                0 5px 25px rgba(0,0,0,0.12);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+
+        .logo {
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            color: #176b35;
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e2f6e8;
+
+            border-radius: 12px;
+
+            font-size: 23px;
+        }
+
+
+        .nav-right {
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .nav-button {
+
+            text-decoration: none;
+
+            padding: 10px 17px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #176b35;
+
+            background: #eef8f1;
+
+            transition: 0.3s;
+        }
+
+
+        .nav-button:hover {
+
+            background: #d8f0df;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .container {
+
+            width: 92%;
+            max-width: 1180px;
+
+            margin: 45px auto 60px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            text-align: center;
+
+            color: white;
+
+            margin-bottom: 35px;
+        }
+
+
+        .hero-badge {
+
+            display: inline-block;
+
+            padding: 8px 16px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.18);
+
+            border: 1px solid rgba(255,255,255,0.35);
+
+            backdrop-filter: blur(10px);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 15px;
+        }
+
+
+        .hero h1 {
+
+            font-size: 42px;
+
+            margin-bottom: 10px;
+
+            font-weight: 800;
+
+            text-shadow:
+                0 3px 10px rgba(0,0,0,0.25);
+        }
+
+
+        .hero p {
+
+            font-size: 16px;
+
+            opacity: 0.92;
+
+            max-width: 650px;
+
+            margin: auto;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ALERTS
+        ===================================================== */
+
+        .success-message {
+
+            background: #e4f8e9;
+
+            color: #176b35;
+
+            border-left: 5px solid #198754;
+
+            padding: 16px 20px;
+
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+
+            font-weight: 700;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+
+        .error-message {
+
+            background: #ffe7e7;
+
+            color: #a00000;
+
+            border-left: 5px solid #dc3545;
+
+            padding: 16px 20px;
+
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+
+            font-weight: 700;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
+
+        .section-card {
+
+            background: rgba(255,255,255,0.97);
+
+            border-radius: 22px;
+
+            padding: 32px;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.14);
+
+            border: 1px solid rgba(255,255,255,0.7);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        .section-title {
+
+            margin-bottom: 25px;
+        }
+
+
+        .section-title h2 {
+
+            color: #176b35;
+
+            font-size: 23px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .section-title p {
+
+            color: #728078;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .crop-form {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .form-group.full {
+
+            grid-column: 1 / -1;
+        }
+
+
+        .form-group label {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #315a3e;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #d5e5d9;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            font-size: 13px;
+
+            color: #244d31;
+
+            background: #fbfefc;
+
+            transition: 0.3s;
+        }
+
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+
+            border-color: #9bc9a8;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color: #198754;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(25,135,84,0.10);
+        }
+
+
+        .form-group textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+
+        .form-help {
+
+            color: #89968e;
+
+            font-size: 11px;
+
+            margin-top: 6px;
+        }
+
+
+        /* =====================================================
+           SAVE BUTTON
+        ===================================================== */
+
+        .button-area {
+
+            grid-column: 1 / -1;
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 8px;
+        }
+
+
+        .save-button {
+
+            border: none;
+
+            padding: 15px 35px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #198754,
+                    #126b3c
+                );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px rgba(25,135,84,0.25);
+
+            transition: 0.3s;
+        }
+
+
+        .save-button:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 25px rgba(25,135,84,0.35);
+        }
+
+
+        /* =====================================================
+           SAVED CROP HEADER
+        ===================================================== */
+
+        .crop-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            padding-bottom: 20px;
+
+            border-bottom: 1px solid #e3eee6;
+        }
+
+
+        .crop-name {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #176b35;
+        }
+
+
+        .crop-status {
+
+            padding: 9px 15px;
+
+            border-radius: 30px;
+
+            background: #dcf6e3;
+
+            color: #176b35;
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
+        .crop-subtitle {
+
+            color: #718074;
+
+            font-size: 13px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+        ===================================================== */
+
+        .crop-summary {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .summary-card {
+
+            padding: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f8fcf9,
+                    #edf8f0
+                );
+
+            border: 1px solid #dbeade;
+
+            border-radius: 16px;
+
+            transition: 0.3s;
+        }
+
+
+        .summary-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 8px 20px rgba(24,93,47,0.10);
+        }
+
+
+        .summary-icon {
+
+            font-size: 22px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .summary-card h4 {
+
+            color: #7a887f;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .summary-card p {
+
+            color: #176b35;
+
+            font-size: 15px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           GROWTH SECTION
+        ===================================================== */
+
+        .growth-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+
+        .growth-number {
+
+            font-size: 38px;
+
+            font-weight: 900;
+
+            color: #198754;
+        }
+
+
+        .progress-container {
+
+            width: 100%;
+
+            height: 18px;
+
+            background: #e4eee7;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            margin-bottom: 30px;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #198754,
+                    #58bf75
+                );
+
+            border-radius: 30px;
+
+            transition: width 1s ease;
+        }
+
+
+        /* =====================================================
+           STAGES
+        ===================================================== */
+
+        .growth-stages {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            position: relative;
+        }
+
+
+        .stage {
+
+            text-align: center;
+
+            padding: 20px 10px;
+
+            border-radius: 16px;
+
+            background: #f6faf7;
+
+            border: 1px solid #dcebdd;
+
+            position: relative;
+
+            transition: 0.3s;
+        }
+
+
+        .stage.active {
+
+            background: #dcf6e4;
+
+            border: 2px solid #198754;
+
+            box-shadow:
+                0 7px 20px rgba(25,135,84,0.12);
+        }
+
+
+        .stage-icon {
+
+            font-size: 30px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .stage h4 {
+
+            font-size: 13px;
+
+            color: #176b35;
+
+            margin-bottom: 5px;
+        }
+
+
+        .stage p {
+
+            font-size: 11px;
+
+            color: #7b887f;
+        }
+
+
+        /* =====================================================
+           REQUIREMENTS
+        ===================================================== */
+
+        .needs-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .need-card {
+
+            padding: 23px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #f2f9f4
+                );
+
+            border: 1px solid #dcebdd;
+
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+
+        .need-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(28,89,47,0.10);
+        }
+
+
+        .need-icon {
+
+            width: 55px;
+            height: 55px;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #e3f5e8;
+
+            border-radius: 15px;
+
+            font-size: 28px;
+        }
+
+
+        .need-card h3 {
+
+            font-size: 15px;
+
+            color: #176b35;
+
+            margin-bottom: 8px;
+        }
+
+
+        .need-card p {
+
+            color: #718074;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           SMART ADVICE
+        ===================================================== */
+
+        .advice-box {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 25px 28px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e5f8ea,
+                    #f3fbf5
+                );
+
+            border: 1px solid #bfe3c8;
+
+            color: #285c39;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .advice-box::after {
+
+            content: "🌱";
+
+            position: absolute;
+
+            right: 25px;
+
+            bottom: -15px;
+
+            font-size: 75px;
+
+            opacity: 0.12;
+        }
+
+
+        /* =====================================================
+           INFORMATION
+        ===================================================== */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .info-card {
+
+            padding: 23px;
+
+            text-align: center;
+
+            border-radius: 17px;
+
+            background: #f7fbf8;
+
+            border: 1px solid #dcebdd;
+        }
+
+
+        .info-card .icon {
+
+            font-size: 32px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .info-card h3 {
+
+            color: #176b35;
+
+            font-size: 16px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .info-card p {
+
+            color: #718074;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-button {
+
+            display: block;
+
+            width: 230px;
+
+            margin: 10px auto 0;
+
+            padding: 14px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            color: white;
+
+            background: rgba(255,255,255,0.16);
+
+            border: 1px solid rgba(255,255,255,0.35);
+
+            border-radius: 12px;
+
+            backdrop-filter: blur(8px);
+
+            font-weight: 700;
+
+            transition: 0.3s;
+        }
+
+
+        .back-button:hover {
+
+            background: rgba(255,255,255,0.25);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 950px) {
+
+            .crop-summary {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .needs-grid {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                padding: 15px 4%;
+            }
+
+            .logo {
+
+                font-size: 17px;
+            }
+
+            .nav-button {
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+            }
+
+            .container {
+
+                width: 94%;
+
+                margin-top: 30px;
+            }
+
+            .hero h1 {
+
+                font-size: 30px;
+            }
+
+            .hero p {
+
+                font-size: 13px;
+            }
+
+            .section-card {
+
+                padding: 22px;
+            }
+
+            .crop-form {
+
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+
+                grid-column: auto;
+            }
+
+            .button-area {
+
+                grid-column: auto;
+            }
+
+            .crop-summary {
+
+                grid-template-columns: 1fr;
+            }
+
+            .growth-stages {
+
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .needs-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .crop-top {
+
+                align-items: flex-start;
+
+                gap: 10px;
+
+                flex-direction: column;
+            }
+
+            .crop-name {
+
+                font-size: 25px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .growth-stages {
+
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌱
+        </div>
+
+        Smart Agriculture
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="nav-button"
+        >
+            🏠 Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-badge">
+            🌾 SMART FARM MANAGEMENT
+        </div>
+
+        <h1>
+            Crop Management
+        </h1>
+
+        <p>
+            Manage your crops, monitor growth,
+            understand crop requirements and
+            make better farming decisions.
+        </p>
+
+    </div>
+
+
+
+    <!-- SUCCESS -->
+
+    {% if success %}
+
+    <div class="success-message">
+
+        ✅ {{ success }}
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+    <div class="error-message">
+
+        ❌ {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         ADD CROP
+    ================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>
+                🌱 Add New Crop
+            </h2>
+
+            <p>
+                Enter your crop and farm information below.
+            </p>
+
+        </div>
+
+
+        <form
+            class="crop-form"
+            method="POST"
+            action="{{ url_for('crop_management') }}"
+        >
+
+
+            <!-- CROP -->
+
+            <div class="form-group">
+
+                <label for="crop_name">
+                    🌾 Crop Name
+                </label>
+
+                <select
+                    id="crop_name"
+                    name="crop_name"
+                    required
+                >
+
+                    <option value="">
+                        Select Crop
+                    </option>
+
+                    <option value="Rice">
+                        🌾 Rice
+                    </option>
+
+                    <option value="Maize">
+                        🌽 Maize
+                    </option>
+
+                    <option value="Ragi">
+                        🌱 Ragi
+                    </option>
+
+                    <option value="Cotton">
+                        🌿 Cotton
+                    </option>
+
+                    <option value="Wheat">
+                        🌾 Wheat
+                    </option>
+
+                    <option value="Tomato">
+                        🍅 Tomato
+                    </option>
+
+                    <option value="Other">
+                        🌱 Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- AREA -->
+
+            <div class="form-group">
+
+                <label for="area">
+                    📐 Farm Area (Acres)
+                </label>
+
+                <input
+                    type="number"
+                    id="area"
+                    name="area"
+                    placeholder="Example: 4"
+                    min="0.1"
+                    step="0.1"
+                    required
+                >
+
+                <span class="form-help">
+                    Enter the total area used for this crop.
+                </span>
+
+            </div>
+
+
+
+            <!-- PLANTING DATE -->
+
+            <div class="form-group">
+
+                <label for="planting_date">
+                    📅 Planting Date
+                </label>
+
+                <input
+                    type="date"
+                    id="planting_date"
+                    name="planting_date"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- GROWTH -->
+
+            <div class="form-group">
+
+                <label for="growth_stage">
+                    🌿 Growth Stage
+                </label>
+
+                <select
+                    id="growth_stage"
+                    name="growth_stage"
+                    required
+                >
+
+                    <option value="">
+                        Select Growth Stage
+                    </option>
+
+                    <option value="Seedling">
+                        🌱 Seedling
+                    </option>
+
+                    <option value="Growing">
+                        🌿 Growing
+                    </option>
+
+                    <option value="Flowering">
+                        🌸 Flowering
+                    </option>
+
+                    <option value="Harvest Ready">
+                        🌾 Harvest Ready
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- SOIL -->
+
+            <div class="form-group">
+
+                <label for="soil_type">
+                    🌱 Soil Type
+                </label>
+
+                <select
+                    id="soil_type"
+                    name="soil_type"
+                    required
+                >
+
+                    <option value="">
+                        Select Soil Type
+                    </option>
+
+                    <option value="Red Soil">
+                        🔴 Red Soil
+                    </option>
+
+                    <option value="Black Soil">
+                        ⚫ Black Soil
+                    </option>
+
+                    <option value="Loamy Soil">
+                        🟤 Loamy Soil
+                    </option>
+
+                    <option value="Sandy Soil">
+                        🟡 Sandy Soil
+                    </option>
+
+                    <option value="Clay Soil">
+                        🟫 Clay Soil
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- IRRIGATION -->
+
+            <div class="form-group">
+
+                <label for="irrigation_method">
+                    💧 Irrigation Method
+                </label>
+
+                <select
+                    id="irrigation_method"
+                    name="irrigation_method"
+                    required
+                >
+
+                    <option value="">
+                        Select Irrigation Method
+                    </option>
+
+                    <option value="Rainfed">
+                        🌧️ Rainfed
+                    </option>
+
+                    <option value="Drip">
+                        💧 Drip Irrigation
+                    </option>
+
+                    <option value="Sprinkler">
+                        💦 Sprinkler
+                    </option>
+
+                    <option value="Flood">
+                        🌊 Flood Irrigation
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- HARVEST -->
+
+            <div class="form-group">
+
+                <label for="harvest_date">
+                    🌾 Expected Harvest Date
+                </label>
+
+                <input
+                    type="date"
+                    id="harvest_date"
+                    name="harvest_date"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- NOTES -->
+
+            <div class="form-group full">
+
+                <label for="notes">
+                    📝 Additional Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    name="notes"
+                    placeholder="Enter additional information about your crop..."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- BUTTON -->
+
+            <div class="button-area">
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+
+                    💾 Save Crop Details
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SAVED CROP
+    ================================================= -->
+
+    {% if crop %}
+
+    <div class="section-card">
+
+
+        <div class="crop-top">
+
+            <div>
+
+                <div class="crop-name">
+
+                    🌾 {{ crop["crop_name"] }}
+
+                </div>
+
+                <div class="crop-subtitle">
+
+                    Your currently managed crop
+
+                </div>
+
+            </div>
+
+
+            <div class="crop-status">
+
+                ● {{ crop["growth_stage"] }}
+
+            </div>
+
+        </div>
+
+
+
+        <div class="crop-summary">
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📐
+                </div>
+
+                <h4>
+                    Farm Area
+                </h4>
+
+                <p>
+                    {{ crop["area"] }} Acres
+                </p>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📅
+                </div>
+
+                <h4>
+                    Planting Date
+                </h4>
+
+                <p>
+                    {{ crop["planting_date"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🌱
+                </div>
+
+                <h4>
+                    Soil Type
+                </h4>
+
+                <p>
+                    {{ crop["soil_type"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    💧
+                </div>
+
+                <h4>
+                    Irrigation
+                </h4>
+
+                <p>
+                    {{ crop["irrigation_method"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🌾
+                </div>
+
+                <h4>
+                    Expected Harvest
+                </h4>
+
+                <p>
+                    {{ crop["harvest_date"] }}
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         GROWTH
+    ================================================= -->
+
+    <div class="section-card">
+
+        <div class="growth-top">
+
+            <div class="section-title">
+
+                <h2>
+                    📈 Crop Growth Progress
+                </h2>
+
+                <p>
+                    Current development of your
+                    {{ crop["crop_name"] }} crop.
+                </p>
+
+            </div>
+
+
+            <div class="growth-number">
+
+                {{ growth_percentage }}%
+
+            </div>
+
+        </div>
+
+
+
+        <div class="progress-container">
+
+            <div
+                class="progress-bar"
+                style="width: {{ growth_percentage }}%;"
+            ></div>
+
+        </div>
+
+
+
+        <div class="growth-stages">
+
+
+            <div
+                class="stage {% if crop['growth_stage'] == 'Seedling' %}active{% endif %}"
+            >
+
+                <div class="stage-icon">
+                    🌱
+                </div>
+
+                <h4>
+                    Seedling
+                </h4>
+
+                <p>
+                    25% Growth
+                </p>
+
+            </div>
+
+
+
+            <div
+                class="stage {% if crop['growth_stage'] == 'Growing' %}active{% endif %}"
+            >
+
+                <div class="stage-icon">
+                    🌿
+                </div>
+
+                <h4>
+                    Growing
+                </h4>
+
+                <p>
+                    50% Growth
+                </p>
+
+            </div>
+
+
+
+            <div
+                class="stage {% if crop['growth_stage'] == 'Flowering' %}active{% endif %}"
+            >
+
+                <div class="stage-icon">
+                    🌸
+                </div>
+
+                <h4>
+                    Flowering
+                </h4>
+
+                <p>
+                    75% Growth
+                </p>
+
+            </div>
+
+
+
+            <div
+                class="stage {% if crop['growth_stage'] == 'Harvest Ready' %}active{% endif %}"
+            >
+
+                <div class="stage-icon">
+                    🌾
+                </div>
+
+                <h4>
+                    Harvest Ready
+                </h4>
+
+                <p>
+                    100% Growth
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         REQUIREMENTS
+    ================================================= -->
+
+    {% if requirements %}
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>
+                🌱 Crop Requirements
+            </h2>
+
+            <p>
+                Recommended requirements for your
+                {{ crop["crop_name"] }}.
+            </p>
+
+        </div>
+
+
+
+        <div class="needs-grid">
+
+
+            <div class="need-card">
+
+                <div class="need-icon">
+                    💧
+                </div>
+
+                <h3>
+                    Water
+                </h3>
+
+                <p>
+                    {{ requirements["water"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="need-card">
+
+                <div class="need-icon">
+                    🌱
+                </div>
+
+                <h3>
+                    Soil
+                </h3>
+
+                <p>
+                    {{ requirements["soil"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="need-card">
+
+                <div class="need-icon">
+                    🌡️
+                </div>
+
+                <h3>
+                    Temperature
+                </h3>
+
+                <p>
+                    {{ requirements["temperature"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="need-card">
+
+                <div class="need-icon">
+                    🧪
+                </div>
+
+                <h3>
+                    Fertilizer
+                </h3>
+
+                <p>
+                    {{ requirements["fertilizer"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="need-card">
+
+                <div class="need-icon">
+                    🐛
+                </div>
+
+                <h3>
+                    Pest Care
+                </h3>
+
+                <p>
+                    {{ requirements["pest"] }}
+                </p>
+
+            </div>
+
+
+
+            <div class="need-card">
+
+                <div class="need-icon">
+                    🚿
+                </div>
+
+                <h3>
+                    Irrigation
+                </h3>
+
+                <p>
+                    Selected:
+                    <strong>
+                        {{ crop["irrigation_method"] }}
+                    </strong>
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SMART ADVICE
+    ================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>
+                💡 Smart Farming Advice
+            </h2>
+
+            <p>
+                AI-based guidance for better crop management.
+            </p>
+
+        </div>
+
+
+        <div class="advice-box">
+
+            {{ requirements["advice"] }}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         INFORMATION
+    ================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-title">
+
+            <h2>
+                📋 Crop Management Tools
+            </h2>
+
+            <p>
+                Use your crop information to manage the farm effectively.
+            </p>
+
+        </div>
+
+
+
+        <div class="info-grid">
+
+
+            <div class="info-card">
+
+                <div class="icon">
+                    🌱
+                </div>
+
+                <h3>
+                    Growth Monitoring
+                </h3>
+
+                <p>
+                    Track your crop from seedling
+                    to harvest.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <div class="icon">
+                    💧
+                </div>
+
+                <h3>
+                    Water Management
+                </h3>
+
+                <p>
+                    Monitor irrigation requirements
+                    and selected irrigation methods.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <div class="icon">
+                    🚜
+                </div>
+
+                <h3>
+                    Farm Planning
+                </h3>
+
+                <p>
+                    Maintain crop information for
+                    better farming decisions.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- BACK -->
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back-button"
+    >
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

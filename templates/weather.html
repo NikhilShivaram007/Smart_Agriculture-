@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Weather Advisory - Smart Agriculture</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f8f2;
+            color: #26352a;
+        }
+
+        .weather-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .weather-header {
+            background: linear-gradient(
+                135deg,
+                #2e7d32,
+                #66bb6a
+            );
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
+
+        .weather-header h1 {
+            margin: 0 0 10px;
+            font-size: 32px;
+        }
+
+        .weather-header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-form select,
+        .search-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            background: white;
+        }
+
+        .search-form select:focus,
+        .search-form input:focus {
+            border-color: #43a047;
+        }
+
+        .search-form button {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #2e7d32;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background: #1b5e20;
+        }
+
+        .search-help {
+            margin-top: 12px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .error-box {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .location-title {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .current-weather {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(180px, 1fr)
+            );
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .weather-card {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .weather-card .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .weather-card h3 {
+            margin: 5px 0;
+            font-size: 17px;
+            color: #555;
+        }
+
+        .weather-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            margin-top: 35px;
+            margin-bottom: 18px;
+            color: #2e7d32;
+            font-size: 24px;
+        }
+
+        .forecast-container {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(140px, 1fr)
+            );
+            gap: 15px;
+        }
+
+        .forecast-card {
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .forecast-card h3 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+
+        .forecast-icon {
+            font-size: 35px;
+            margin: 8px 0;
+        }
+
+        .forecast-temp {
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        .forecast-rain {
+            color: #1976d2;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .advice-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(250px, 1fr)
+            );
+            gap: 18px;
+        }
+
+        .advice-card {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .advice-card h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .alert-card {
+            background: #fff8e1;
+            border-left: 6px solid #ffb300;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .alert-card h3 {
+            margin-top: 0;
+            color: #e65100;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .south-india-title {
+            margin: 0 0 12px;
+            color: #2e7d32;
+            font-size: 18px;
+        }
+
+        @media (max-width: 700px) {
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-form select,
+            .search-form input,
+            .search-form button {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            .weather-header h1 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="weather-container">
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="{{ url_for('dashboard') }}"
+       class="back-button">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+    <!-- HEADER -->
+
+    <div class="weather-header">
+
+        <h1>🌦️ Weather Advisory</h1>
+
+        <p>
+
+            Get current weather information,
+            forecasts and farming advice for
+            locations across South India.
+
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH BOX -->
+
+    <div class="search-box">
+
+        <div class="south-india-title">
+
+            📍 Select a South India Location
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for('weather') }}"
+              class="search-form"
+              onsubmit="showLoading()">
+
+
+            <!-- SOUTH INDIA LOCATION -->
+
+            <select name="location">
+
+                <option value="">
+                    -- Select South India Location --
+                </option>
+
+
+                {% for state, cities in south_india_locations.items() %}
+
+                    <optgroup label="{{ state }}">
+
+                        {% for city in cities %}
+
+                            <option value="{{ city }}"
+                                {% if weather.location and city in weather.location %}
+                                    selected
+                                {% endif %}>
+
+                                {{ city }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </optgroup>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- CUSTOM LOCATION -->
+
+            <input
+                type="text"
+                name="custom_location"
+                placeholder="Or enter any city / village"
+            >
+
+
+            <!-- SEARCH BUTTON -->
+
+            <button type="submit">
+
+                🔍 Search Weather
+
+            </button>
+
+        </form>
+
+
+        <div class="search-help">
+
+            💡 You can select a city from the list or
+            enter any city/village manually.
+
+        </div>
+
+
+        <div id="loading"
+             class="loading">
+
+            ⏳ Loading weather information...
+
+        </div>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    {% if weather.error %}
+
+    <div class="error-box">
+
+        ⚠️ {{ weather.error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- LOCATION -->
+
+    <h2 class="location-title">
+
+        📍 {{ weather.location }}
+
+    </h2>
+
+
+    <!-- CURRENT WEATHER -->
+
+    <div class="current-weather">
+
+
+        <!-- CONDITION -->
+
+        <div class="weather-card">
+
+            <div class="icon">
+
+                {{ weather.weather_icon }}
+
+            </div>
+
+            <h3>Condition</h3>
+
+            <div class="value"
+                 style="font-size:22px;">
+
+                {{ weather.condition }}
+
+            </div>
+
+        </div>
+
+
+        <!-- TEMPERATURE -->
+
+        <div class="weather-card">
+
+            <div class="icon">
+
+                🌡️
+
+            </div>
+
+            <h3>Temperature</h3>
+
+            <div class="value">
+
+                {{ weather.temperature }} °C
+
+            </div>
+
+        </div>
+
+
+        <!-- HUMIDITY -->
+
+        <div class="weather-card">
+
+            <div class="icon">
+
+                💧
+
+            </div>
+
+            <h3>Humidity</h3>
+
+            <div class="value">
+
+                {{ weather.humidity }} %
+
+            </div>
+
+        </div>
+
+
+        <!-- WIND -->
+
+        <div class="weather-card">
+
+            <div class="icon">
+
+                💨
+
+            </div>
+
+            <h3>Wind Speed</h3>
+
+            <div class="value"
+                 style="font-size:23px;">
+
+                {{ weather.wind }} km/h
+
+            </div>
+
+        </div>
+
+
+        <!-- RAINFALL -->
+
+        <div class="weather-card">
+
+            <div class="icon">
+
+                🌧️
+
+            </div>
+
+            <h3>Rainfall</h3>
+
+            <div class="value">
+
+                {{ weather.rainfall }} mm
+
+            </div>
+
+        </div>
+
+
+        <!-- CLOUD -->
+
+        <div class="weather-card">
+
+            <div class="icon">
+
+                ☁️
+
+            </div>
+
+            <h3>Cloud Cover</h3>
+
+            <div class="value">
+
+                {{ weather.cloud }} %
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- WEATHER ALERT -->
+
+    <div class="alert-card">
+
+        <h3>
+
+            ⚠️ Weather Alert
+
+        </h3>
+
+        <p>
+
+            {{ weather.weather_alert }}
+
+        </p>
+
+    </div>
+
+
+    <!-- 7 DAY FORECAST -->
+
+    <h2 class="section-title">
+
+        📅 7-Day Forecast
+
+    </h2>
+
+
+    <div class="forecast-container">
+
+        {% if weather.forecast %}
+
+            {% for day in weather.forecast %}
+
+            <div class="forecast-card">
+
+                <h3>
+
+                    {{ day.day }}
+
+                </h3>
+
+
+                <div class="forecast-icon">
+
+                    {{ day.icon }}
+
+                </div>
+
+
+                <div>
+
+                    {{ day.condition }}
+
+                </div>
+
+
+                <div class="forecast-temp">
+
+                    {{ day.max_temp }}°C /
+
+                    {{ day.min_temp }}°C
+
+                </div>
+
+
+                <div class="forecast-rain">
+
+                    🌧️ {{ day.rain }} mm
+
+                </div>
+
+
+                <div class="forecast-rain">
+
+                    ☔ {{ day.rain_probability }}% chance
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="forecast-card">
+
+                <h3>
+
+                    No Forecast Available
+
+                </h3>
+
+                <p>
+
+                    Weather forecast could not be loaded.
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- FARMING ADVISORY -->
+
+    <h2 class="section-title">
+
+        🌱 Farming Advisory
+
+    </h2>
+
+
+    <div class="advice-grid">
+
+
+        <!-- IRRIGATION -->
+
+        <div class="advice-card">
+
+            <h3>
+
+                💧 Irrigation Advice
+
+            </h3>
+
+            <p>
+
+                {{ weather.irrigation_advice }}
+
+            </p>
+
+        </div>
+
+
+        <!-- CROP CARE -->
+
+        <div class="advice-card">
+
+            <h3>
+
+                🌾 Crop Care Advice
+
+            </h3>
+
+            <p>
+
+                {{ weather.crop_advice }}
+
+            </p>
+
+        </div>
+
+
+        <!-- FERTILIZER -->
+
+        <div class="advice-card">
+
+            <h3>
+
+                🧪 Fertilizer Advice
+
+            </h3>
+
+            <p>
+
+                {{ weather.fertilizer_advice }}
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function showLoading() {
+
+        document.getElementById(
+            "loading"
+        ).style.display = "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
