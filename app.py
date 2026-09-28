@@ -8,15 +8,9 @@ from threading import Timer
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
-\
+
 app = Flask(__name__)
 app.secret_key = "smart_farm_secret_key"
-\
-\
-\
-\
-\
-\
 def get_db_connection():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DB_PATH = os.path.join(BASE_DIR, "database.db")
